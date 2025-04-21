@@ -75,6 +75,7 @@
 <button class="refresh-button" onclick="location.reload()">⟳</button>
 
 <script>
+  // Random positioning of nav links
   const links = ["link-contact", "link-work", "link-about", "link-hell"];
   links.forEach(id => {
     const el = document.getElementById(id);
@@ -84,10 +85,7 @@
     }
   });
 
-  function optimizeUrl(url) {
-    return url.replace('/m/', '/s/');
-  }
-
+  // Image URLs
   const imageUrls = [
     "https://freight.cargo.site/m/K2317764992703527171374306453718/03.jpg",
     "https://freight.cargo.site/m/A2317764992721973915448016005334/041.jpg",
@@ -108,7 +106,7 @@
 
   const img = document.getElementById("random-image");
   const randomUrl = imageUrls[Math.floor(Math.random() * imageUrls.length)];
-  img.src = optimizeUrl(randomUrl);
+  img.src = randomUrl;
   img.style.top = Math.floor(Math.random() * 70 + 10) + "%";
   img.style.left = Math.floor(Math.random() * 80 + 10) + "%";
 </script>
