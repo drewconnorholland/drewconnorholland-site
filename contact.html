@@ -35,23 +35,28 @@
       transform: scale(1.05);
     }
 
-    .back-button {
+    .controls {
       position: fixed;
       bottom: 20px;
       left: 20px;
-      font-size: 1rem;
+      display: flex;
+      gap: 15px;
+    }
+
+    .control-button {
+      font-size: 1.4rem;
       color: white;
       text-decoration: none;
       border: 1px solid white;
-      padding: 10px 18px;
+      padding: 8px 14px;
       border-radius: 6px;
       background: transparent;
       font-family: 'Audiowide', sans-serif;
-      text-transform: uppercase;
       transition: 0.3s ease all;
+      cursor: pointer;
     }
 
-    .back-button:hover {
+    .control-button:hover {
       background: red;
       color: black;
       box-shadow: 0 0 10px red, 0 0 20px red;
@@ -67,7 +72,10 @@
     <a href="https://instagram.com/drewconnor" target="_blank" class="link">@drewconnor on Instagram</a>
   </div>
 
-  <a href="index.html" class="back-button">← Back</a>
+  <div class="controls">
+    <a href="index.html" class="control-button">←</a>
+    <button class="control-button" onclick="location.reload()">⟳</button>
+  </div>
 
   <script>
     function randomPercent(min, max) {
