@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +8,8 @@
   <style>
     body {
       margin: 0;
-      background-color: #f9f9f9;
+      background-color: #000;
+      color: white;
       font-family: 'Audiowide', sans-serif;
     }
     header {
@@ -20,12 +20,12 @@
       font-size: 24px;
       font-weight: 700;
       z-index: 1000;
-      color: #222;
       pointer-events: none;
+      color: white;
     }
     #gallery {
       width: 100vw;
-      padding-top: 80px;
+      padding-top: 100px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -46,9 +46,37 @@
     img.artwork:active {
       cursor: grabbing;
     }
+    .nav-buttons {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1100;
+      display: flex;
+      gap: 10px;
+    }
+    .nav-button {
+      font-size: 1rem;
+      padding: 8px 12px;
+      background: transparent;
+      color: white;
+      border: 1px solid white;
+      border-radius: 5px;
+      font-family: 'Audiowide', sans-serif;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .nav-button:hover {
+      background: red;
+      color: black;
+      box-shadow: 0 0 10px red, 0 0 20px red;
+    }
   </style>
 </head>
 <body>
+  <div class="nav-buttons">
+    <button class="nav-button" onclick="history.back()">Back</button>
+    <button class="nav-button" onclick="location.reload()">⟳ Refresh</button>
+  </div>
   <header>Drew Connor Holland</header>
   <div id="gallery"></div>
 
@@ -84,10 +112,8 @@
   "https://freight.cargo.site/m/F2317764993349163213954140760278/22-11-27_MedRes_DCH_20.jpg",
   "https://freight.cargo.site/m/W2317764993367609958027850311894/22-11-27_MedRes_DCH_21.jpg",
   "https://freight.cargo.site/m/U2317764993386056702101559863510/22-11-27_MedRes_DCH_22.jpg",
-  "https://freight.cargo.site/m/N2317764993404503446175269415126/23-11-21_DCH_HighRes_01.tif",
   "https://freight.cargo.site/m/J2317764993422950190248978966742/24.jpg",
   "https://freight.cargo.site/m/W2317764993441396934322688518358/251.jpg",
-  "________________",
   "https://freight.cargo.site/m/M2317764993478290422470107621590/261.jpg",
   "https://freight.cargo.site/m/S2317764993496737166543817173206/26.jpg",
   "https://freight.cargo.site/m/E2317764993515183910617526724822/28.jpg",
@@ -239,9 +265,10 @@
   "https://freight.cargo.site/m/X2317764996189961801305411709142/1S5A0285-1.jpg",
   "https://freight.cargo.site/m/V2317764996208408545379121260758/02.jpg",
   "https://freight.cargo.site/m/Q2317764996226855289452830812374/2.-Martin--Tom--Mammon-Sometimes-a-dream-turns-into-a-dream.JPG"
-];
+  ];
+
     let loadedCount = 0;
-    const batchSize = 15;
+    const batchSize = 10;
 
     function shuffle(array) {
       return array.sort(() => Math.random() - 0.5);
@@ -255,20 +282,22 @@
 
       const batch = shuffledArtworks.slice(loadedCount, loadedCount + batchSize);
       batch.forEach(src => {
-        const wrapper = document.createElement('div');
-        wrapper.className = 'art-block';
-        const xOffset = Math.floor(Math.random() * 200 - 100) + 'px';
-        wrapper.style.setProperty('--x-offset', xOffset);
+        if (src.includes("http")) {
+          const wrapper = document.createElement('div');
+          wrapper.className = 'art-block';
+          const xOffset = Math.floor(Math.random() * 200 - 100) + 'px';
+          wrapper.style.setProperty('--x-offset', xOffset);
 
-        const img = document.createElement('img');
-        img.src = src;
-        img.className = 'artwork';
+          const img = document.createElement('img');
+          img.src = src;
+          img.className = 'artwork';
 
-        const scaleFactor = Math.random() * 0.35 + 0.75; // 0.75 to 1.1
-        img.style.width = (baseWidth * scaleFactor).toFixed(2) + 'px';
+          const scaleFactor = Math.random() * 0.35 + 0.75; // 0.75 to 1.1
+          img.style.width = (baseWidth * scaleFactor).toFixed(2) + 'px';
 
-        wrapper.appendChild(img);
-        gallery.appendChild(wrapper);
+          wrapper.appendChild(img);
+          gallery.appendChild(wrapper);
+        }
       });
       loadedCount += batch.length;
     }
