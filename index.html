@@ -1,5 +1,6 @@
 <script>
-  const links = ["link-contact", "link-work", "link-about", "link-hell"];
+  // Position links randomly
+  const links = ["link-contact", "link-works", "link-about", "link-hell"];
   links.forEach(id => {
     const el = document.getElementById(id);
     if (el) {
@@ -8,6 +9,7 @@
     }
   });
 
+  // List of images
   const imageUrls = [
     "https://freight.cargo.site/m/K2317764992703527171374306453718/03.jpg",
     "https://freight.cargo.site/m/A2317764992721973915448016005334/041.jpg",
@@ -47,35 +49,17 @@
     "https://freight.cargo.site/m/L2317764993552077398764945828054/301.jpg",
     "https://freight.cargo.site/m/A2317764993570524142838655379670/30.jpg",
     "https://freight.cargo.site/m/D2317764993588970886912364931286/31.jpg",
-    "https://freight.cargo.site/m/C2317764993607417630986074482902/32.jpghttps://freight.cargo.site/m/Y2317764993625864375059784034518/35.jpg",
+    "https://freight.cargo.site/m/C2317764993607417630986074482902/32.jpg",
+    "https://freight.cargo.site/m/Y2317764993625864375059784034518/35.jpg",
     "https://freight.cargo.site/m/J2317764993644311119133493586134/45.jpg",
     "https://freight.cargo.site/m/V2317764993662757863207203137750/46.jpg",
     "https://freight.cargo.site/m/M2317764993681204607280912689366/47.jpg",
     "https://freight.cargo.site/m/D2317764993699651351354622240982/54.jpg",
     "https://freight.cargo.site/m/T2317764993718098095428331792598/58.jpg",
-    "https://freight.cargo.site/m/C2317764993736544839502041344214/2023.11.15_Drew-Connor-Holland_Artwork_1.jpg",
-    "https://freight.cargo.site/m/H2317764993754991583575750895830/2023.11.15_Drew-Connor-Holland_Artwork_2.jpg",
-    "https://freight.cargo.site/m/I2317764993773438327649460447446/2023.11.15_Drew-Connor-Holland_Artwork_3.jpg",
-    "https://freight.cargo.site/m/H2317764993791885071723169999062/2023.11.15_Drew-Connor-Holland_Artwork_4.jpg",
-    "https://freight.cargo.site/m/T2317764993810331815796879550678/2023.11.15_Drew-Connor-Holland_Artwork_5.jpg",
-    "https://freight.cargo.site/m/X2317764993828778559870589102294/2023.11.15_Drew-Connor-Holland_Artwork_6.jpg",
-    "https://freight.cargo.site/m/I2317764993847225303944298653910/2023.11.15_Drew-Connor-Holland_Artwork_7.jpg",
-    "https://freight.cargo.site/m/W2317764993865672048018008205526/2023.11.15_Drew-Connor-Holland_Artwork_8.jpg",
-    "https://freight.cargo.site/m/V2317764993884118792091717757142/2023.11.15_Drew-Connor-Holland_Artwork_9.jpg",
-    "https://freight.cargo.site/m/E2317764993902565536165427308758/2023.11.15_Drew-Connor-Holland_Artwork_10.jpg",
-    "https://freight.cargo.site/m/E2317764993921012280239136860374/2023.11.15_Drew-Connor-Holland_Artwork_11.jpg",
-    "https://freight.cargo.site/m/H2317764993939459024312846411990/2023.11.15_Drew-Connor-Holland_Artwork_12.jpg",
-    "https://freight.cargo.site/m/C2317764993957905768386555963606/2023.11.15_Drew-Connor-Holland_Artwork_13.jpg",
-    "https://freight.cargo.site/m/X2317764993976352512460265515222/2023.11.15_Drew-Connor-Holland_Artwork_14.jpg",
-    "https://freight.cargo.site/m/C2317764993994799256533975066838/2023.11.15_Drew-Connor-Holland_Artwork_15.jpg",
-    "https://freight.cargo.site/m/K2317764994013246000607684618454/2023.11.15_Drew-Connor-Holland_Artwork_16.jpg",
-    "https://freight.cargo.site/m/O2317764994031692744681394170070/377600000-R1-00-1.JPG",
-    "https://freight.cargo.site/m/M2317764994050139488755103721686/000569870004_4A.jpg",
-    "https://freight.cargo.site/m/X2317764994068586232828813273302/000569870009_9A.jpg",
     "https://freight.cargo.site/m/Q2317764996226855289452830812374/2.-Martin--Tom--Mammon-Sometimes-a-dream-turns-into-a-dream.JPG"
   ];
 
-  // Select and display image
+  // Display a random image from the list
   const img = document.getElementById("random-image");
   const randomUrl = imageUrls[Math.floor(Math.random() * imageUrls.length)];
   img.src = randomUrl;
