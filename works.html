@@ -12,6 +12,7 @@
       color: white;
       font-family: 'Audiowide', sans-serif;
     }
+
     header {
       position: fixed;
       top: 20px;
@@ -21,21 +22,23 @@
       font-weight: 700;
       z-index: 1000;
       pointer-events: none;
-      color: white;
     }
+
     #gallery {
       width: 100vw;
-      padding-top: 100px;
+      padding-top: 80px;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
+
     .art-block {
       margin: 60px 0;
       position: relative;
       transform: translateX(var(--x-offset));
       transition: transform 0.3s ease;
     }
+
     img.artwork {
       object-fit: contain;
       cursor: grab;
@@ -43,42 +46,49 @@
       display: block;
       max-width: 100%;
     }
+
     img.artwork:active {
       cursor: grabbing;
     }
-    .nav-buttons {
+
+    .button {
       position: fixed;
-      top: 20px;
-      left: 20px;
-      z-index: 1100;
-      display: flex;
-      gap: 10px;
-    }
-    .nav-button {
-      font-size: 1rem;
-      padding: 8px 12px;
-      background: transparent;
+      bottom: 20px;
+      font-size: 1.4rem;
       color: white;
+      text-decoration: none;
       border: 1px solid white;
-      border-radius: 5px;
+      padding: 8px 14px;
+      border-radius: 6px;
+      background: transparent;
       font-family: 'Audiowide', sans-serif;
+      transition: 0.3s ease all;
       cursor: pointer;
-      transition: 0.3s;
+      z-index: 999;
     }
-    .nav-button:hover {
+
+    .button:hover {
       background: red;
       color: black;
       box-shadow: 0 0 10px red, 0 0 20px red;
+      transform: scale(1.1);
+    }
+
+    .back-button {
+      left: 20px;
+    }
+
+    .refresh-button {
+      right: 20px;
     }
   </style>
 </head>
 <body>
-  <div class="nav-buttons">
-    <button class="nav-button" onclick="history.back()">Back</button>
-    <button class="nav-button" onclick="location.reload()">⟳ Refresh</button>
-  </div>
   <header>Drew Connor Holland</header>
   <div id="gallery"></div>
+
+  <button class="button back-button" onclick="history.back()">← Back</button>
+  <button class="button refresh-button" onclick="location.reload()">⟳ Refresh</button>
 
   <script>
     const gallery = document.getElementById('gallery');
