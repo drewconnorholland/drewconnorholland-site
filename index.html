@@ -1,33 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DCH — Hell Mode</title>
-
-  <!-- Fonts and preconnect -->
+  <meta charset="UTF-8">
+  <title>Hell Mode</title>
   <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet" />
-  <link rel="preconnect" href="https://freight.cargo.site" />
-
   <style>
     body {
-      background-color: #000;
-      color: white;
-      font-family: 'Audiowide', sans-serif;
       margin: 0;
       padding: 0;
-      height: 100vh;
+      background-color: black;
+      font-family: 'Audiowide', sans-serif;
       overflow: hidden;
+    }
+
+    #hell-wrapper {
       position: relative;
+      width: 100vw;
+      height: 100vh;
     }
 
     .nav-link {
       position: absolute;
-      text-decoration: none;
       color: white;
+      text-decoration: none;
       font-size: 1.8rem;
-      font-family: 'Audiowide', sans-serif;
       transition: transform 0.3s ease, color 0.3s ease;
+      z-index: 10;
     }
 
     .nav-link:hover {
@@ -41,8 +39,8 @@
     }
 
     .bg-image {
-      position: fixed;
-      opacity: 0.2;
+      position: absolute;
+      opacity: 0.15;
       pointer-events: none;
       mix-blend-mode: lighten;
       max-height: 35vh;
@@ -50,10 +48,10 @@
     }
 
     .refresh-button {
-      position: fixed;
+      position: absolute;
       bottom: 20px;
       left: 20px;
-      font-size: 1.4rem;
+      font-size: 1.2rem;
       color: white;
       text-decoration: none;
       border: 1px solid white;
@@ -75,93 +73,45 @@
   </style>
 </head>
 <body>
-
- <body>
-  <div id="hell-wrapper" style="position: relative; width: 100vw; height: 100vh;">
-
-    <!-- Navigation Links -->
+  <div id="hell-wrapper">
     <a href="about.html" id="link-about" class="nav-link">About</a>
     <a href="contact.html" id="link-contact" class="nav-link">Contact</a>
     <a href="works.html" id="link-works" class="nav-link">Works</a>
     <a href="hell-mode.html" id="link-hell" class="nav-link hell-mode">Hell Mode</a>
 
-    <!-- Background Image -->
     <img id="random-image" class="bg-image" />
-
-    <!-- Refresh Button -->
     <button class="refresh-button" onclick="location.reload()">⟳</button>
-
   </div>
 
   <script>
     window.addEventListener("DOMContentLoaded", () => {
-      // Randomly position links inside the wrapper
+      // Position links randomly
       const links = ["link-contact", "link-works", "link-about", "link-hell"];
       links.forEach(id => {
         const el = document.getElementById(id);
         if (el) {
           el.style.top = Math.floor(Math.random() * 70 + 10) + "%";
           el.style.left = Math.floor(Math.random() * 70 + 10) + "%";
-          el.style.zIndex = 10;
         }
       });
 
-      // Random Image 
+      // Image URLs
       const imageUrls = [
         "https://freight.cargo.site/m/K2317764992703527171374306453718/03.jpg",
         "https://freight.cargo.site/m/A2317764992721973915448016005334/041.jpg",
         "https://freight.cargo.site/m/Z2317764992740420659521725556950/04.jpg",
+        "https://freight.cargo.site/m/V2317764992777314147669144660182/06.jpg",
         "https://freight.cargo.site/m/Y2317764992795760891742854211798/07.jpg",
-        "https://freight.cargo.site/m/F2317764992832654379890273315030/10.jpg",
-        "https://freight.cargo.site/m/C2317764992887994612111401969878/15.jpg"
-        "https://freight.cargo.site/m/U2317764992943334844332530624726/19.jpg",
-        "https://freight.cargo.site/m/K2317764992961781588406240176342/20.jpg",
-        "https://freight.cargo.site/m/R2317764992980228332479949727958/22.jpg",
-        "https://freight.cargo.site/m/P2317764993054015308774787934422/22-11-27_MedRes_DCH_04.jpg",
-        "https://freight.cargo.site/m/Q2317764993127802285069626140886/22-11-27_MedRes_DCH_08.jpg",
-        "https://freight.cargo.site/m/G2317764993201589261364464347350/22-11-27_MedRes_DCH_12.jpg",
-        "https://freight.cargo.site/m/N2317764993220036005438173898966/22-11-27_MedRes_DCH_13.jpg",
-        "https://freight.cargo.site/m/E2317764993238482749511883450582/22-11-27_MedRes_DCH_14.jpg",
-        "https://freight.cargo.site/m/H2317764993256929493585593002198/22-11-27_MedRes_DCH_15.jpg",
-        "https://freight.cargo.site/m/U2317764993275376237659302553814/22-11-27_MedRes_DCH_16.jpg",
-        "https://freight.cargo.site/m/V2317764993293822981733012105430/22-11-27_MedRes_DCH_17.jpg",
-        "https://freight.cargo.site/m/L2317764993312269725806721657046/22-11-27_MedRes_DCH_18.jpg",
-        "https://freight.cargo.site/m/P2317764993330716469880431208662/22-11-27_MedRes_DCH_19.jpg",
-        "https://freight.cargo.site/m/F2317764993349163213954140760278/22-11-27_MedRes_DCH_20.jpg",
-        "https://freight.cargo.site/m/W2317764993367609958027850311894/22-11-27_MedRes_DCH_21.jpg",
-        "https://freight.cargo.site/m/U2317764993386056702101559863510/22-11-27_MedRes_DCH_22.jpg",
-        "https://freight.cargo.site/m/N2317764993404503446175269415126/23-11-21_DCH_HighRes_01.tif",
-        "https://freight.cargo.site/m/J2317764993422950190248978966742/24.jpg",
-        "https://freight.cargo.site/m/W2317764993441396934322688518358/251.jpg",
-        "https://freight.cargo.site/m/M2317764993478290422470107621590/261.jpg",
-        "https://freight.cargo.site/m/S2317764993496737166543817173206/26.jpg",
-        "https://freight.cargo.site/m/E2317764993515183910617526724822/28.jpg",
-        "https://freight.cargo.site/m/U2317764993533630654691236276438/29.jpg",
-        "https://freight.cargo.site/m/L2317764993552077398764945828054/301.jpg",
-        "https://freight.cargo.site/m/A2317764993570524142838655379670/30.jpg",
-        "https://freight.cargo.site/m/D2317764993588970886912364931286/31.jpg",
-        "https://freight.cargo.site/m/C2317764993607417630986074482902/32.jpg",
-        "https://freight.cargo.site/m/Y2317764993625864375059784034518/35.jpg",
+        "https://freight.cargo.site/m/F2317764992832654379890273315030/10.jpg"
       ];
 
-      // Display random image
+      // Display random background image
       const img = document.getElementById("random-image");
-      if (img) {
-        const randomUrl = imageUrls[Math.floor(Math.random() * imageUrls.length)];
-        img.src = randomUrl;
-        img.style.top = Math.floor(Math.random() * 70 + 10) + "%";
-        img.style.left = Math.floor(Math.random() * 80 + 10) + "%";
-      }
+      const randomUrl = imageUrls[Math.floor(Math.random() * imageUrls.length)];
+      img.src = randomUrl;
+      img.style.top = Math.floor(Math.random() * 70 + 10) + "%";
+      img.style.left = Math.floor(Math.random() * 70 + 10) + "%";
     });
   </script>
-
 </body>
 </html>
-
-
-
-
-
-
-
-
