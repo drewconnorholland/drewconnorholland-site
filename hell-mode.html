@@ -1,0 +1,347 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Drew Connor Holland - Gallery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      background-color: #000;
+      font-family: 'Audiowide', sans-serif;
+      overflow-x: hidden;
+    }
+    header {
+      position: fixed;
+      top: 20px;
+      width: 100%;
+      text-align: center;
+      font-size: 24px;
+      font-weight: 700;
+      z-index: 1000;
+      color: #fff;
+      pointer-events: none;
+    }
+    #background-wrapper {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      z-index: -1;
+    }
+    #background-wrapper iframe {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      min-width: 100vw;
+      min-height: 100vh;
+      pointer-events: none;
+    }
+    #gallery {
+      width: 100vw;
+      padding-top: 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .art-block {
+      margin: 60px 0;
+      position: relative;
+      transform: translateX(var(--x-offset));
+      transition: transform 0.3s ease;
+    }
+    img.artwork {
+      object-fit: contain;
+      cursor: grab;
+      transition: transform 0.2s ease;
+      display: block;
+      max-width: 100%;
+      filter: invert(1) hue-rotate(180deg);
+    }
+    img.artwork:active {
+      cursor: grabbing;
+    }
+  </style>
+</head>
+<body>
+  <div id="background-wrapper"></div>
+  <header>Drew Connor Holland</header>
+  <div id="gallery"></div>
+
+  <script>
+    const artworks = [
+  "﻿https://freight.cargo.site/m/K2317764992703527171374306453718/03.jpg",
+  "https://freight.cargo.site/m/A2317764992721973915448016005334/041.jpg",
+  "https://freight.cargo.site/m/Z2317764992740420659521725556950/04.jpg",
+  "https://freight.cargo.site/m/H2317764992758867403595435108566/05.jpg",
+  "https://freight.cargo.site/m/V2317764992777314147669144660182/06.jpg",
+  "https://freight.cargo.site/m/Y2317764992795760891742854211798/07.jpg",
+  "https://freight.cargo.site/m/B2317764992814207635816563763414/09.jpg",
+  "https://freight.cargo.site/m/F2317764992832654379890273315030/10.jpg",
+  "https://freight.cargo.site/m/O2317764992851101123963982866646/131.jpg",
+  "https://freight.cargo.site/m/F2317764992869547868037692418262/13.jpg",
+  "https://freight.cargo.site/m/C2317764992887994612111401969878/15.jpg",
+  "https://freight.cargo.site/m/Z2317764992906441356185111521494/16.jpg",
+  "https://freight.cargo.site/m/S2317764992924888100258821073110/17.jpg",
+  "https://freight.cargo.site/m/U2317764992943334844332530624726/19.jpg",
+  "https://freight.cargo.site/m/K2317764992961781588406240176342/20.jpg",
+  "https://freight.cargo.site/m/R2317764992980228332479949727958/22.jpg",
+  "https://freight.cargo.site/m/P2317764993054015308774787934422/22-11-27_MedRes_DCH_04.jpg",
+  "https://freight.cargo.site/m/Q2317764993127802285069626140886/22-11-27_MedRes_DCH_08.jpg",
+  "https://freight.cargo.site/m/G2317764993201589261364464347350/22-11-27_MedRes_DCH_12.jpg",
+  "https://freight.cargo.site/m/N2317764993220036005438173898966/22-11-27_MedRes_DCH_13.jpg",
+  "https://freight.cargo.site/m/E2317764993238482749511883450582/22-11-27_MedRes_DCH_14.jpg",
+  "https://freight.cargo.site/m/H2317764993256929493585593002198/22-11-27_MedRes_DCH_15.jpg",
+  "https://freight.cargo.site/m/U2317764993275376237659302553814/22-11-27_MedRes_DCH_16.jpg",
+  "https://freight.cargo.site/m/V2317764993293822981733012105430/22-11-27_MedRes_DCH_17.jpg",
+  "https://freight.cargo.site/m/L2317764993312269725806721657046/22-11-27_MedRes_DCH_18.jpg",
+  "https://freight.cargo.site/m/P2317764993330716469880431208662/22-11-27_MedRes_DCH_19.jpg",
+  "https://freight.cargo.site/m/F2317764993349163213954140760278/22-11-27_MedRes_DCH_20.jpg",
+  "https://freight.cargo.site/m/W2317764993367609958027850311894/22-11-27_MedRes_DCH_21.jpg",
+  "https://freight.cargo.site/m/U2317764993386056702101559863510/22-11-27_MedRes_DCH_22.jpg",
+  "https://freight.cargo.site/m/N2317764993404503446175269415126/23-11-21_DCH_HighRes_01.tif",
+  "https://freight.cargo.site/m/J2317764993422950190248978966742/24.jpg",
+  "https://freight.cargo.site/m/W2317764993441396934322688518358/251.jpg",
+  "________________",
+  "https://freight.cargo.site/m/M2317764993478290422470107621590/261.jpg",
+  "https://freight.cargo.site/m/S2317764993496737166543817173206/26.jpg",
+  "https://freight.cargo.site/m/E2317764993515183910617526724822/28.jpg",
+  "https://freight.cargo.site/m/U2317764993533630654691236276438/29.jpg",
+  "https://freight.cargo.site/m/L2317764993552077398764945828054/301.jpg",
+  "https://freight.cargo.site/m/A2317764993570524142838655379670/30.jpg",
+  "https://freight.cargo.site/m/D2317764993588970886912364931286/31.jpg",
+  "https://freight.cargo.site/m/C2317764993607417630986074482902/32.jpghttps://freight.cargo.site/m/Y2317764993625864375059784034518/35.jpg",
+  "https://freight.cargo.site/m/J2317764993644311119133493586134/45.jpg",
+  "https://freight.cargo.site/m/V2317764993662757863207203137750/46.jpg",
+  "https://freight.cargo.site/m/M2317764993681204607280912689366/47.jpg",
+  "https://freight.cargo.site/m/D2317764993699651351354622240982/54.jpg",
+  "https://freight.cargo.site/m/T2317764993718098095428331792598/58.jpg",
+  "https://freight.cargo.site/m/C2317764993736544839502041344214/2023.11.15_Drew-Connor-Holland_Artwork_1.jpg",
+  "https://freight.cargo.site/m/H2317764993754991583575750895830/2023.11.15_Drew-Connor-Holland_Artwork_2.jpg",
+  "https://freight.cargo.site/m/I2317764993773438327649460447446/2023.11.15_Drew-Connor-Holland_Artwork_3.jpg",
+  "https://freight.cargo.site/m/H2317764993791885071723169999062/2023.11.15_Drew-Connor-Holland_Artwork_4.jpg",
+  "https://freight.cargo.site/m/T2317764993810331815796879550678/2023.11.15_Drew-Connor-Holland_Artwork_5.jpg",
+  "https://freight.cargo.site/m/X2317764993828778559870589102294/2023.11.15_Drew-Connor-Holland_Artwork_6.jpg",
+  "https://freight.cargo.site/m/I2317764993847225303944298653910/2023.11.15_Drew-Connor-Holland_Artwork_7.jpg",
+  "https://freight.cargo.site/m/W2317764993865672048018008205526/2023.11.15_Drew-Connor-Holland_Artwork_8.jpg",
+  "https://freight.cargo.site/m/V2317764993884118792091717757142/2023.11.15_Drew-Connor-Holland_Artwork_9.jpg",
+  "https://freight.cargo.site/m/E2317764993902565536165427308758/2023.11.15_Drew-Connor-Holland_Artwork_10.jpg",
+  "https://freight.cargo.site/m/E2317764993921012280239136860374/2023.11.15_Drew-Connor-Holland_Artwork_11.jpg",
+  "https://freight.cargo.site/m/H2317764993939459024312846411990/2023.11.15_Drew-Connor-Holland_Artwork_12.jpg",
+  "https://freight.cargo.site/m/C2317764993957905768386555963606/2023.11.15_Drew-Connor-Holland_Artwork_13.jpg",
+  "https://freight.cargo.site/m/X2317764993976352512460265515222/2023.11.15_Drew-Connor-Holland_Artwork_14.jpg",
+  "https://freight.cargo.site/m/C2317764993994799256533975066838/2023.11.15_Drew-Connor-Holland_Artwork_15.jpg",
+  "https://freight.cargo.site/m/K2317764994013246000607684618454/2023.11.15_Drew-Connor-Holland_Artwork_16.jpg",
+  "https://freight.cargo.site/m/O2317764994031692744681394170070/377600000-R1-00-1.JPG",
+  "https://freight.cargo.site/m/M2317764994050139488755103721686/000569870004_4A.jpg",
+  "https://freight.cargo.site/m/X2317764994068586232828813273302/000569870009_9A.jpg",
+  "https://freight.cargo.site/m/U2317764994087032976902522824918/3774000000-R1-07-17.JPG",
+  "https://freight.cargo.site/m/G2317764994105479720976232376534/3775000000-R1-04-5.JPG",
+  "https://freight.cargo.site/m/R2317764994123926465049941928150/3775000000-R1-28-29.JPG",
+  "https://freight.cargo.site/m/J2317764994142373209123651479766/AI-1.jpg",
+  "https://freight.cargo.site/m/T2317764994160819953197361031382/AI-2.jpg",
+  "https://freight.cargo.site/m/R2317764994179266697271070582998/AI-3.jpg",
+  "https://freight.cargo.site/m/S2317764994197713441344780134614/AI-4.jpg",
+  "https://freight.cargo.site/m/F2317764994216160185418489686230/AI-5.jpg",
+  "https://freight.cargo.site/m/K2317764994234606929492199237846/AI-6.jpg",
+  "https://freight.cargo.site/m/O2317764994271500417639618341078/AI-8.jpg",
+  "https://freight.cargo.site/m/G2317764994289947161713327892694/ArtSchoolBall-5114.jpg",
+  "https://freight.cargo.site/m/V2317764994308393905787037444310/Babettes-desk.PNG",
+  "https://freight.cargo.site/m/R2317764994326840649860746995926/DCH-heartbreak-riso.jpg",
+  "https://freight.cargo.site/m/J2317764994345287393934456547542/DCH-MAF-25-Catallogue-004.jpg",
+  "https://freight.cargo.site/m/B2317764994363734138008166099158/DCH-MAF-25-Catallogue-005.jpg",
+  "https://freight.cargo.site/m/S2317764994382180882081875650774/DCH-MAF-25-Catallogue-006.jpg",
+  "https://freight.cargo.site/m/T2317764994400627626155585202390/DCH-MAF-25-Catallogue-007.jpg",
+  "https://freight.cargo.site/m/L2317764994419074370229294754006/DCH-MAF-25-Catallogue-008.jpg",
+  "https://freight.cargo.site/m/Q2317764994437521114303004305622/DCH-MAF-25-Catallogue-009.jpg",
+  "https://freight.cargo.site/m/G2317764994455967858376713857238/DCH-MAF-25-Catallogue-010.jpg",
+  "https://freight.cargo.site/m/L2317764994419074370229294754006/DCH-MAF-25-Catallogue-008.jpg",
+  "https://freight.cargo.site/m/Q2317764994437521114303004305622/DCH-MAF-25-Catallogue-009.jpg",
+  "https://freight.cargo.site/m/G2317764994455967858376713857238/DCH-MAF-25-Catallogue-010.jpg",
+  "https://freight.cargo.site/m/N2317764994474414602450423408854/DCH-MAF-25-Catallogue-011.jpg",
+  "https://freight.cargo.site/m/H2317764994492861346524132960470/DCH-MAF-25-Catallogue-012.jpg",
+  "https://freight.cargo.site/m/S2317764994511308090597842512086/DCH-MAF-25-Catallogue-013.jpg",
+  "https://freight.cargo.site/m/H2317764994529754834671552063702/DCH-MAF-25-Catallogue-014.jpg",
+  "https://freight.cargo.site/m/I2317764994548201578745261615318/DCH-MAF-25-Catallogue-015.jpg",
+  "https://freight.cargo.site/m/G2317764994566648322818971166934/DCH-MAF-25-Catallogue-016.jpg",
+  "https://freight.cargo.site/m/E2317764994585095066892680718550/DCH-MAF-25-Catallogue-017.jpg",
+  "https://freight.cargo.site/m/N2317764994603541810966390270166/DCH-MAF-25-Catallogue-018.jpg",
+  "https://freight.cargo.site/m/W2317764994621988555040099821782/DCH-MAF-25-Catallogue-019.jpg",
+  "https://freight.cargo.site/m/N2317764994640435299113809373398/DCH-MAF-25-Catallogue-020.jpg",
+  "https://freight.cargo.site/m/X2317764994658882043187518925014/DCH-MAF-25-Catallogue-021.jpg",
+  "https://freight.cargo.site/m/J2317764994677328787261228476630/DCH-MAF-25-Catallogue-022.jpg",
+  "https://freight.cargo.site/m/K2317764994695775531334938028246/DCH-MAF-25-Catallogue-023.jpg",
+  "https://freight.cargo.site/m/C2317764994714222275408647579862/DCH-MAF-25-Catallogue-024.jpg",
+  "https://freight.cargo.site/m/M2317764994732669019482357131478/DCH-MAF-25-Catallogue-025.jpg",
+  "https://freight.cargo.site/m/U2317764994751115763556066683094/DCH-MAF-25-Catallogue-026.jpg",
+  "https://freight.cargo.site/m/D2317764994769562507629776234710/DCH-MAF-25-Catallogue-027.jpg",
+  "https://freight.cargo.site/m/S2317764994788009251703485786326/DCH-MAF-25-Catallogue-028.jpg",
+  "https://freight.cargo.site/m/R2317764994806455995777195337942/DCH-MAF-25-Catallogue-029.jpg",
+  "https://freight.cargo.site/m/M2317764994824902739850904889558/DCH-MAF-25-Catallogue-030.jpg",
+  "https://freight.cargo.site/m/R2317764994843349483924614441174/DCH-MAF-25-Catallogue-031.jpg",
+  "https://freight.cargo.site/m/H2317764994861796227998323992790/DCH-MAF-25-Catallogue-032.jpg",
+  "https://freight.cargo.site/m/Z2317764994880242972072033544406/DCH-MAF-25-Catallogue-033.jpg",
+  "https://freight.cargo.site/m/I2317764994898689716145743096022/DCH-MAF-25-Catallogue-034.jpg",
+  "https://freight.cargo.site/m/R2317764994917136460219452647638/DCH-MAF-25-Catallogue-035.jpg",
+  "https://freight.cargo.site/m/W2317764994935583204293162199254/DCH-MAF-25-Catallogue-036.jpg",
+  "https://freight.cargo.site/m/X2317764994954029948366871750870/DCH-MAF-25-Catallogue-037.jpg",
+  "https://freight.cargo.site/m/U2317764994972476692440581302486/DCH-MAF-25-Catallogue-038.jpg",
+  "https://freight.cargo.site/m/B2317764994990923436514290854102/DCH-MAF-25-Catallogue-039.jpg",
+  "https://freight.cargo.site/m/H2317764995009370180588000405718/DCH-MAF-25-Catallogue-040.jpg",
+  "https://freight.cargo.site/m/F2317764995027816924661709957334/DCH-MAF-25-Catalogue-41-2025-021.jpg",
+  "https://freight.cargo.site/m/J2317764995046263668735419508950/DCH-MAF-25-Catalogue-42-2025-022.jpg",
+  "https://freight.cargo.site/m/P2317764995064710412809129060566/DCH-MAF-25-Catalogue-43-2025-023.jpg",
+  "https://freight.cargo.site/m/J2317764995083157156882838612182/DCH-MAF-Alphabet-works-2025-004.jpg",
+  "https://freight.cargo.site/m/M2317764995101603900956548163798/DCH-MAF-Alphabet-works-2025-005.jpg",
+  "https://freight.cargo.site/m/D2317764995120050645030257715414/DCH-MAF-Alphabet-works-2025-006.jpg",
+  "https://freight.cargo.site/m/Z2317764995138497389103967267030/DCH-MAF-Alphabet-works-2025-007.jpg",
+  "https://freight.cargo.site/m/H2317764995156944133177676818646/DCH-MAF-Alphabet-works-2025-008.jpg",
+  "https://freight.cargo.site/m/J2317764995175390877251386370262/DCH-MAF-Alphabet-works-2025-009.jpg",
+  "https://freight.cargo.site/m/L2317764995193837621325095921878/DCH-MAF-Alphabet-works-2025-010.jpg",
+  "https://freight.cargo.site/m/J2317764995212284365398805473494/DCH-MAF-Alphabet-works-2025-011.jpg",
+  "https://freight.cargo.site/m/S2317764995230731109472515025110/DCH-MAF-Alphabet-works-2025-012.jpg",
+  "https://freight.cargo.site/m/C2317764995249177853546224576726/DCH-MAF-Alphabet-works-2025-014.jpg",
+  "https://freight.cargo.site/m/R2317764995267624597619934128342/DCH-MAF-Alphabet-works-2025-015.jpg",
+  "https://freight.cargo.site/m/A2317764995286071341693643679958/DCH-MAF-Alphabet-works-2025-016.jpg",
+  "https://freight.cargo.site/m/E2317764995304518085767353231574/DCH-MAF-Alphabet-works-2025-017.jpg",
+  "https://freight.cargo.site/m/T2317764995322964829841062783190/DCH-MAF-Alphabet-works-2025-018.jpg",
+  "https://freight.cargo.site/m/H2317764995341411573914772334806/DCH-MAF-Alphabet-works-2025-019.jpg",
+  "https://freight.cargo.site/m/L2317764995359858317988481886422/DCH-MAF-Alphabet-works-2025-020.jpg",
+  "https://freight.cargo.site/m/C2317764995378305062062191438038/DCH-MAF-Sheet-Works-2025--100.jpg",
+  "https://freight.cargo.site/m/H2317764995396751806135900989654/DCH-MAF-Sheet-works-2025_-109.jpg",
+  "https://freight.cargo.site/m/E2317764995415198550209610541270/DCH-MAF-Sheet-works-2025-056.jpg",
+  "https://freight.cargo.site/m/E2317764995433645294283320092886/DCH-MAF-Sheet-works-2025-062.jpg",
+  "https://freight.cargo.site/m/X2317764995452092038357029644502/DCH-MAF-Sheet-works-2025-064.jpg",
+  "https://freight.cargo.site/m/V2317764995470538782430739196118/DCH-MAF-Sheet-works-2025-113.jpg",
+  "https://freight.cargo.site/m/W2317764995488985526504448747734/DCHnadir01.jpg",
+  "https://freight.cargo.site/m/A2317764995507432270578158299350/Drew-for-Nasha-6.jpg",
+  "https://freight.cargo.site/m/A2317764995525879014651867850966/Drew-for-Nasha-13.jpg",
+  "https://freight.cargo.site/m/G2317764995544325758725577402582/Drew-Connor-Holland-FS-20201014-9874.jpg",
+  "https://freight.cargo.site/m/Y2317764995562772502799286954198/Drew-Connor-Holland-FS-20201014-9876.jpg",
+  "https://freight.cargo.site/m/S2317764995581219246872996505814/Drew-Connor-Holland-FS-20201014-9882.jpg",
+  "https://freight.cargo.site/m/S2317764995599665990946706057430/Drew-Connor-Holland-FS-20201014-9887.jpg",
+  "https://freight.cargo.site/m/X2317764995618112735020415609046/DuttySlip-0344.jpg",
+  "https://freight.cargo.site/m/W2317764995636559479094125160662/DuttySlip-0345.jpg",
+  "https://freight.cargo.site/m/E2317764995655006223167834712278/etwas-heller.PNG",
+  "https://freight.cargo.site/m/P2317764995673452967241544263894/get-in-my-sexy-bed.PNG",
+  "https://freight.cargo.site/m/W2317764995691899711315253815510/grotty-outdoor-trashcan.PNG",
+  "https://freight.cargo.site/m/Z2317764995710346455388963367126/guns-n-roses-carpet.PNG",
+  "https://freight.cargo.site/m/A2317764995728793199462672918742/Hello-Kitty-towel.PNG",
+  "https://freight.cargo.site/m/X2317764995747239943536382470358/IMG_0208.jpg",
+  "https://freight.cargo.site/m/D2317764995765686687610092021974/IMG_6105.JPG",
+  "https://freight.cargo.site/m/V2317764995784133431683801573590/IMG_6107.JPG",
+  "https://freight.cargo.site/m/Z2317764995802580175757511125206/IMG_6111.JPG",
+  "https://freight.cargo.site/m/B2317764995821026919831220676822/IMG_6112.JPG",
+  "https://freight.cargo.site/m/T2317764995839473663904930228438/IMG_6113.JPG",
+  "https://freight.cargo.site/m/T2317764995857920407978639780054/IMG_6117.JPG",
+  "https://freight.cargo.site/m/I2317764995876367152052349331670/IMG_6122.JPG",
+  "https://freight.cargo.site/m/X2317764995894813896126058883286/IMG_7575.PNG",
+  "https://freight.cargo.site/m/O2317764995913260640199768434902/IMG_9100.jpg",
+  "https://freight.cargo.site/m/H2317764995931707384273477986518/IMG_9151.jpg",
+  "https://freight.cargo.site/m/G2317764995950154128347187538134/italian-fireplace.PNG",
+  "https://freight.cargo.site/m/D2317764995968600872420897089750/JAN-MURPHY-FLOWER-STUDY-EDIT.jpg",
+  "https://freight.cargo.site/m/M2317764995987047616494606641366/Landscape-I-can_t-hear-the-rain.jpg",
+  "https://freight.cargo.site/m/Y2317764996005494360568316192982/Landscape-The-only-thing-you-remember-is-you-only-whisper-to-me.jpg",
+  "https://freight.cargo.site/m/M2317764996023941104642025744598/Nasha_Install_Dec-22-Web-3.jpg",
+  "https://freight.cargo.site/m/C2317764996042387848715735296214/Nasha_Install_Dec-22-Web-9.jpg",
+  "https://freight.cargo.site/m/N2317764996060834592789444847830/Portrait-Nina.jpg",
+  "https://freight.cargo.site/m/K2317764996079281336863154399446/sexy-washing-machine.PNG",
+  "https://freight.cargo.site/m/P2317764996097728080936863951062/_MG_3658.jpg",
+  "https://freight.cargo.site/m/Q2317764996116174825010573502678/_MG_3659.jpg",
+  "https://freight.cargo.site/m/R2317764996134621569084283054294/_MG_3664.jpg",
+  "https://freight.cargo.site/m/Y2317764996153068313157992605910/01.jpg",
+  "https://freight.cargo.site/m/U2317764996171515057231702157526/1.jpg",
+  "https://freight.cargo.site/m/X2317764996189961801305411709142/1S5A0285-1.jpg",
+  "https://freight.cargo.site/m/V2317764996208408545379121260758/02.jpg",
+  "https://freight.cargo.site/m/Q2317764996226855289452830812374/2.-Martin--Tom--Mammon-Sometimes-a-dream-turns-into-a-dream.JPG"
+];
+    const gallery = document.getElementById('gallery');
+    let loadedCount = 0;
+    const batchSize = 15;
+
+    function shuffle(array) {
+      return array.sort(() => Math.random() - 0.5);
+    }
+
+    const shuffledArtworks = shuffle([...artworks]);
+
+    function loadArtworksBatch() {
+      const screenWidth = window.innerWidth;
+      const baseWidth = screenWidth / 3;
+
+      const batch = shuffledArtworks.slice(loadedCount, loadedCount + batchSize);
+      batch.forEach(src => {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'art-block';
+        const xOffset = Math.floor(Math.random() * 200 - 100) + 'px';
+        wrapper.style.setProperty('--x-offset', xOffset);
+
+        const img = document.createElement('img');
+        img.src = src;
+        img.className = 'artwork';
+
+        const scaleFactor = Math.random() * 0.35 + 0.75; // 0.75 to 1.1
+        img.style.width = (baseWidth * scaleFactor).toFixed(2) + 'px';
+
+        wrapper.appendChild(img);
+        gallery.appendChild(wrapper);
+      });
+      loadedCount += batch.length;
+    }
+
+    window.addEventListener('scroll', () => {
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
+        loadArtworksBatch();
+      }
+    });
+
+    loadArtworksBatch();
+  </script>
+
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script>
+    let player;
+
+    function onYouTubeIframeAPIReady() {
+      const wrapper = document.getElementById('background-wrapper');
+      const iframe = document.createElement('div');
+      iframe.id = 'yt-bg-player';
+      wrapper.appendChild(iframe);
+
+      player = new YT.Player('yt-bg-player', {
+        videoId: 'MsntxeL0N5I',
+        playerVars: {
+          autoplay: 1,
+          controls: 0,
+          showinfo: 0,
+          modestbranding: 1,
+          loop: 1,
+          fs: 0,
+          cc_load_policy: 0,
+          iv_load_policy: 3,
+          autohide: 0,
+          playlist: 'MsntxeL0N5I',
+          mute: 1
+        },
+        events: {
+          onReady: function (e) {
+            e.target.playVideo();
+          }
+        }
+      });
+    }
+
+    document.addEventListener('click', () => {
+      if (player && player.unMute) {
+        player.unMute();
+        player.setVolume(100);
+      }
+    }, { once: true });
+  </script>
+</body>
+</html>
