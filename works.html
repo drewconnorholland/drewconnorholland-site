@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>~work</title>
+  <title>WORKS</title>
 
-  <!-- Load Epilogue and Audiowide -->
-  <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500&family=Audiowide&display=swap" rel="stylesheet" />
+  <!-- Load Epilogue Medium and Audiowide -->
+  <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@500&family=Audiowide&display=swap" rel="stylesheet" />
 
   <style>
     body {
@@ -15,7 +15,7 @@
       background-color: #000;
       color: white;
       font-family: 'Epilogue', sans-serif;
-      font-weight: 400;
+      font-weight: 500;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -29,8 +29,8 @@
       width: 100%;
       text-align: center;
       font-size: 24px;
-      font-weight: 400;
-      letter-spacing: 0.2em;
+      font-weight: 500;
+      letter-spacing: 0.05em;
       z-index: 1000;
       pointer-events: none;
       font-family: 'Epilogue', sans-serif;
@@ -54,11 +54,12 @@
     img.artwork {
       object-fit: contain;
       cursor: pointer;
-      transition: transform 0.3s ease, z-index 0.3s;
+      transition: transform 0.3s ease, z-index 0.3s, opacity 0.5s ease;
       display: block;
       max-width: 100%;
       position: relative;
       z-index: 1;
+      opacity: 1;
     }
 
     img.artwork.clicked {
@@ -102,7 +103,7 @@
 
   <div class="controls">
     <a href="index.html" class="control-button">←</a>
-    <button class="control-button" onclick="location.reload()">⟳</button>
+    <button class="control-button refresh">⟳</button>
   </div>
 
   <script>
@@ -289,7 +290,7 @@
   "https://freight.cargo.site/m/X2317764996189961801305411709142/1S5A0285-1.jpg",
   "https://freight.cargo.site/m/V2317764996208408545379121260758/02.jpg",
   "https://freight.cargo.site/m/Q2317764996226855289452830812374/2.-Martin--Tom--Mammon-Sometimes-a-dream-turns-into-a-dream.JPG"
- ];
+];
 
     let loadedCount = 0;
     const batchSize = 10;
@@ -319,8 +320,8 @@
         img.style.width = (baseWidth * scaleFactor).toFixed(2) + 'px';
 
         img.addEventListener('click', e => {
-          e.stopPropagation(); // don't trigger document-wide collapse
-          img.classList.toggle('clicked'); // toggle this image only
+          e.stopPropagation();
+          img.classList.toggle('clicked');
         });
 
         wrapper.appendChild(img);
@@ -345,6 +346,27 @@
     });
 
     loadArtworksBatch();
+  </script>
+
+  <!-- Refresh button with fade-out and scroll-to-top -->
+  <script>
+    document.querySelector(".refresh").addEventListener("click", (e) => {
+      e.preventDefault();
+
+      // Fade out all images
+      document.querySelectorAll('.artwork').forEach(img => {
+        img.style.transition = "opacity 0.5s ease";
+        img.style.opacity = "0";
+      });
+
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      // Reload after transition
+      setTimeout(() => {
+        location.reload();
+      }, 800);
+    });
   </script>
 </body>
 </html>
