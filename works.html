@@ -308,31 +308,34 @@ img.artwork.clicked {
 
     const shuffledArtworks = shuffle([...artworks]);
 
-    function loadArtworksBatch() {
-      const screenWidth = window.innerWidth;
-      const baseWidth = screenWidth / 3;
+function loadArtworksBatch() {
+  const screenWidth = window.innerWidth;
+  const baseWidth = screenWidth / 3;
 
-      const batch = shuffledArtworks.slice(loadedCount, loadedCount + batchSize);
-      batch.forEach(src => {
-        if (src.includes("http")) {
-          const wrapper = document.createElement('div');
-          wrapper.className = 'art-block';
-          const xOffset = Math.floor(Math.random() * 200 - 100) + 'px';
-          wrapper.style.setProperty('--x-offset', xOffset);
+  const batch = shuffledArtworks.slice(loadedCount, loadedCount + batchSize);
+  batch.forEach(src => {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'art-block';
+    const xOffset = Math.floor(Math.random() * 200 - 100) + 'px';
+    wrapper.style.setProperty('--x-offset', xOffset);
 
-          const img = document.createElement('img');
-          img.src = src;
-          img.className = 'artwork';
+    const img = document.createElement('img');
+    img.src = src;
+    img.className = 'artwork';
 
-          const scaleFactor = Math.random() * 0.35 + 0.75; // 0.75 to 1.1
-          img.style.width = (baseWidth * scaleFactor).toFixed(2) + 'px';
+    const scaleFactor = Math.random() * 0.35 + 0.75;
+    img.style.width = (baseWidth * scaleFactor).toFixed(2) + 'px';
 
-          wrapper.appendChild(img);
-          gallery.appendChild(wrapper);
-        }
-      });
-      loadedCount += batch.length;
-    }
+    // Toggle enlarge on click
+    img.addEventListener('click', () => {
+      img.classList.toggle('enlarged');
+    });
+
+    wrapper.appendChild(img);
+    gallery.appendChild(wrapper);
+  });
+  loadedCount += batch.length;
+}
 
     window.addEventListener('scroll', () => {
       if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
