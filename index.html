@@ -1,115 +1,127 @@
-<!-- Load IBM Plex Mono ExtraLight -->
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@100&display=swap" rel="stylesheet" />
-<link rel="preconnect" href="https://freight.cargo.site" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Drew Connor Holland</title>
 
-<style>
-  body {
-    background-color: #000;
-    color: white;
-    font-family: 'IBM Plex Mono', monospace;
-    font-weight: 100;
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    overflow: hidden;
-    position: relative;
-  }
+  <!-- Load Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@500&family=Audiowide&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://freight.cargo.site" />
 
-  .nav-link {
-    position: absolute;
-    text-decoration: none;
-    color: white;
-    font-size: 1.8rem;
-    transition: transform 0.3s ease, color 0.3s ease;
-    font-family: 'IBM Plex Mono', monospace;
-    font-weight: 100;
-  }
-
-  .nav-link:hover {
-    color: red;
-    transform: scale(1.1);
-  }
-
-  .hell-mode {
-    font-size: 2.5rem;
-    text-shadow: 0 0 10px red, 0 0 20px red;
-  }
-
-  .bg-image {
-    position: fixed;
-    opacity: 0.2;
-    pointer-events: none;
-    mix-blend-mode: lighten;
-    max-height: 35vh;
-  }
-
-  .refresh-button {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    font-size: 1.4rem;
-    color: white;
-    text-decoration: none;
-    border: 1px solid white;
-    padding: 8px 14px;
-    border-radius: 6px;
-    background: transparent;
-    font-family: 'IBM Plex Mono', monospace;
-    font-weight: 100;
-    transition: 0.3s ease all;
-    cursor: pointer;
-    z-index: 999;
-  }
-
-  .refresh-button:hover {
-    background: red;
-    color: black;
-    box-shadow: 0 0 10px red, 0 0 20px red;
-    transform: scale(1.1);
-  }
-</style>
-
-<a href="about.html" id="link-about" class="nav-link">About</a>
-<a href="contact.html" id="link-contact" class="nav-link">Contact</a>
-<a href="works.html" id="link-work" class="nav-link">Works</a>
-<a href="hell-mode.html" id="link-hell" class="nav-link hell-mode">Hell Mode</a>
-
-<img id="random-image" class="bg-image" />
-<button class="refresh-button" onclick="location.reload()">⟳</button>
-
-<script>
-  // Random positioning of nav links
-  const links = ["link-contact", "link-work", "link-about", "link-hell"];
-  links.forEach(id => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.style.top = Math.floor(Math.random() * 70 + 10) + "%";
-      el.style.left = Math.floor(Math.random() * 80 + 10) + "%";
+  <style>
+    body {
+      background-color: #000;
+      color: white;
+      font-family: 'Epilogue', sans-serif;
+      font-weight: 500;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
     }
-  });
 
-  // Image URLs
-  const imageUrls = [
-    "https://freight.cargo.site/m/K2317764992703527171374306453718/03.jpg",
-    "https://freight.cargo.site/m/A2317764992721973915448016005334/041.jpg",
-    "https://freight.cargo.site/m/Z2317764992740420659521725556950/04.jpg",
-    "https://freight.cargo.site/m/H2317764992758867403595435108566/05.jpg",
-    "https://freight.cargo.site/m/V2317764992777314147669144660182/06.jpg",
-    "https://freight.cargo.site/m/Y2317764992795760891742854211798/07.jpg",
-    "https://freight.cargo.site/m/B2317764992814207635816563763414/09.jpg",
-    "https://freight.cargo.site/m/F2317764992832654379890273315030/10.jpg",
-    "https://freight.cargo.site/m/O2317764992851101123963982866646/131.jpg",
-    "https://freight.cargo.site/m/X2317764993828778559870589102294/2023.11.15_Drew-Connor-Holland_Artwork_6.jpg",
-    "https://freight.cargo.site/m/H2317764993754991583575750895830/2023.11.15_Drew-Connor-Holland_Artwork_2.jpg",
-    "https://freight.cargo.site/m/W2317764993865672048018008205526/2023.11.15_Drew-Connor-Holland_Artwork_8.jpg",
-    "https://freight.cargo.site/m/M2317764995987047616494606641366/Landscape-I-can_t-hear-the-rain.jpg",
-    "https://freight.cargo.site/m/S2317764995581219246872996505814/Drew-Connor-Holland-FS-20201014-9882.jpg",
-    "https://freight.cargo.site/m/X2317764995894813896126058883286/IMG_7575.PNG"
-  ];
+    .nav-link {
+      position: absolute;
+      text-decoration: none;
+      color: white;
+      font-size: 1.8rem;
+      transition: transform 0.3s ease, color 0.3s ease;
+      font-family: 'Epilogue', sans-serif;
+      font-weight: 500;
+    }
 
-  const img = document.getElementById("random-image");
-  const randomUrl = imageUrls[Math.floor(Math.random() * imageUrls.length)];
-  img.src = randomUrl;
-  img.style.top = Math.floor(Math.random() * 70 + 10) + "%";
-  img.style.left = Math.floor(Math.random() * 80 + 10) + "%";
-</script>
+    .nav-link:hover {
+      color: red;
+      transform: scale(1.1);
+    }
+
+    .hell-mode {
+      font-size: 2.5rem;
+      text-shadow: 0 0 10px red, 0 0 20px red;
+      font-family: 'Audiowide', sans-serif !important;
+    }
+
+    .bg-image {
+      position: fixed;
+      opacity: 0.2;
+      pointer-events: none;
+      mix-blend-mode: lighten;
+      max-height: 35vh;
+    }
+
+    .refresh-button {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      font-size: 1.4rem;
+      color: white;
+      text-decoration: none;
+      border: 1px solid white;
+      padding: 8px 14px;
+      border-radius: 6px;
+      background: transparent;
+      font-family: 'Epilogue', sans-serif;
+      font-weight: 500;
+      transition: 0.3s ease all;
+      cursor: pointer;
+      z-index: 999;
+    }
+
+    .refresh-button:hover {
+      background: red;
+      color: black;
+      box-shadow: 0 0 10px red, 0 0 20px red;
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+
+<body>
+  <a href="about.html" id="link-about" class="nav-link">About</a>
+  <a href="contact.html" id="link-contact" class="nav-link">Contact</a>
+  <a href="works.html" id="link-work" class="nav-link">Works</a>
+  <a href="hell-mode.html" id="link-hell" class="nav-link hell-mode">Hell Mode</a>
+
+  <img id="random-image" class="bg-image" />
+  <button class="refresh-button" onclick="location.reload()">⟳</button>
+
+  <script>
+    // Random positioning of nav links
+    const links = ["link-contact", "link-work", "link-about", "link-hell"];
+    links.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.style.top = Math.floor(Math.random() * 70 + 10) + "%";
+        el.style.left = Math.floor(Math.random() * 80 + 10) + "%";
+      }
+    });
+
+    // Random background image
+    const imageUrls = [
+      "https://freight.cargo.site/m/K2317764992703527171374306453718/03.jpg",
+      "https://freight.cargo.site/m/A2317764992721973915448016005334/041.jpg",
+      "https://freight.cargo.site/m/Z2317764992740420659521725556950/04.jpg",
+      "https://freight.cargo.site/m/H2317764992758867403595435108566/05.jpg",
+      "https://freight.cargo.site/m/V2317764992777314147669144660182/06.jpg",
+      "https://freight.cargo.site/m/Y2317764992795760891742854211798/07.jpg",
+      "https://freight.cargo.site/m/B2317764992814207635816563763414/09.jpg",
+      "https://freight.cargo.site/m/F2317764992832654379890273315030/10.jpg",
+      "https://freight.cargo.site/m/O2317764992851101123963982866646/131.jpg",
+      "https://freight.cargo.site/m/X2317764993828778559870589102294/2023.11.15_Drew-Connor-Holland_Artwork_6.jpg",
+      "https://freight.cargo.site/m/H2317764993754991583575750895830/2023.11.15_Drew-Connor-Holland_Artwork_2.jpg",
+      "https://freight.cargo.site/m/W2317764993865672048018008205526/2023.11.15_Drew-Connor-Holland_Artwork_8.jpg",
+      "https://freight.cargo.site/m/M2317764995987047616494606641366/Landscape-I-can_t-hear-the-rain.jpg",
+      "https://freight.cargo.site/m/S2317764995581219246872996505814/Drew-Connor-Holland-FS-20201014-9882.jpg",
+      "https://freight.cargo.site/m/X2317764995894813896126058883286/IMG_7575.PNG"
+    ];
+
+    const img = document.getElementById("random-image");
+    const randomUrl = imageUrls[Math.floor(Math.random() * imageUrls.length)];
+    img.src = randomUrl;
+    img.style.top = Math.floor(Math.random() * 70 + 10) + "%";
+    img.style.left = Math.floor(Math.random() * 80 + 10) + "%";
+  </script>
+</body>
+</html>
