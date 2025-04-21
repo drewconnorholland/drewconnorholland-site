@@ -10,7 +10,7 @@
       margin: 0;
       background-color: #000;
       font-family: 'Audiowide', sans-serif;
-      overflow-x: hidden;
+      overflow: hidden;
       color: white;
     }
 
@@ -47,31 +47,31 @@
     }
 
     #gallery {
+      position: relative;
       width: 100vw;
-      padding-top: 80px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      height: 100vh;
+      overflow: hidden;
     }
 
     .art-block {
-      margin: 60px 0;
-      position: relative;
-      transform: translateX(var(--x-offset));
-      transition: transform 0.3s ease;
+      position: absolute;
+      animation: floatAround 30s linear infinite;
     }
 
     img.artwork {
       object-fit: contain;
-      cursor: grab;
-      transition: transform 0.2s ease;
       display: block;
       max-width: 100%;
+      pointer-events: none;
       filter: invert(1) hue-rotate(180deg);
     }
 
-    img.artwork:active {
-      cursor: grabbing;
+    @keyframes floatAround {
+      0%   { transform: translate(0, 0) rotate(0deg); }
+      25%  { transform: translate(20px, -30px) rotate(2deg); }
+      50%  { transform: translate(-15px, 20px) rotate(-2deg); }
+      75%  { transform: translate(10px, 25px) rotate(1deg); }
+      100% { transform: translate(0, 0) rotate(0deg); }
     }
 
     .controls {
@@ -109,7 +109,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: rgba(0, 0, 0, 0.9);
+      background-color: rgba(0, 0, 0, 0.95);
       color: red;
       font-size: 3rem;
       text-align: center;
@@ -121,7 +121,7 @@
 
     #overlay.fade-out {
       opacity: 0;
-      transform: scale(1.5);
+      transform: scale(1.3);
       pointer-events: none;
     }
   </style>
@@ -130,13 +130,10 @@
   <div id="background-wrapper"></div>
   <header>Drew Connor Holland</header>
   <div id="gallery"></div>
-
-  <!-- Overlay -->
   <div id="overlay">PRESS FOR HELL MODE</div>
 
-  <!-- Buttons -->
   <div class="controls">
-    <a href="index.html" class="control-button">←</a>
+    <a href="index.html" class="control-button">&larr;</a>
     <button class="control-button" onclick="location.reload()">⟳</button>
   </div>
 
@@ -323,56 +320,34 @@
       "https://freight.cargo.site/m/X2317764996189961801305411709142/1S5A0285-1.jpg",
       "https://freight.cargo.site/m/V2317764996208408545379121260758/02.jpg",
       "https://freight.cargo.site/m/Q2317764996226855289452830812374/2.-Martin--Tom--Mammon-Sometimes-a-dream-turns-into-a-dream.JPG"
-    ];
+       ];
 
     const gallery = document.getElementById('gallery');
-    let loadedCount = 0;
-    const batchSize = 12;
+    const screenWidth = window.innerWidth;
+    const screenHeight = window.innerHeight;
 
-    function shuffle(array) {
-      return array.sort(() => Math.random() - 0.5);
-    }
+    artworks.forEach(src => {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'art-block';
+      wrapper.style.top = Math.random() * screenHeight + 'px';
+      wrapper.style.left = Math.random() * screenWidth + 'px';
 
-    const shuffledArtworks = shuffle([...artworks]);
+      const img = document.createElement('img');
+      img.src = src;
+      img.className = 'artwork';
+      img.style.width = (Math.random() * 20 + 10) + 'vw';
 
-    function loadArtworksBatch() {
-      const screenWidth = window.innerWidth;
-      const baseWidth = screenWidth / 3;
-
-      const batch = shuffledArtworks.slice(loadedCount, loadedCount + batchSize);
-      batch.forEach(src => {
-        const wrapper = document.createElement('div');
-        wrapper.className = 'art-block';
-        const xOffset = Math.floor(Math.random() * 200 - 100) + 'px';
-        wrapper.style.setProperty('--x-offset', xOffset);
-
-        const img = document.createElement('img');
-        img.src = src;
-        img.className = 'artwork';
-
-        const scaleFactor = Math.random() * 0.35 + 0.75;
-        img.style.width = (baseWidth * scaleFactor).toFixed(2) + 'px';
-
-        wrapper.appendChild(img);
-        gallery.appendChild(wrapper);
-      });
-      loadedCount += batch.length;
-    }
-
-    window.addEventListener('scroll', () => {
-      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
-        loadArtworksBatch();
-      }
+      wrapper.appendChild(img);
+      gallery.appendChild(wrapper);
     });
-
-    loadArtworksBatch();
   </script>
 
-  <!-- YouTube Background -->
   <script src="https://www.youtube.com/iframe_api"></script>
   <script>
     let player;
-    function onYouTubeIframeAPIReady() {
+    document.getElementById('overlay').addEventListener('click', () => {
+      document.getElementById('overlay').classList.add('fade-out');
+
       const wrapper = document.getElementById('background-wrapper');
       const iframe = document.createElement('div');
       iframe.id = 'yt-bg-player';
@@ -390,22 +365,15 @@
           cc_load_policy: 0,
           iv_load_policy: 3,
           autohide: 0,
-          playlist: 'MsntxeL0N5I',
-          mute: 1
+          playlist: 'MsntxeL0N5I'
         },
         events: {
-          onReady: e => e.target.playVideo()
+          onReady: e => {
+            e.target.unMute();
+            e.target.playVideo();
+          }
         }
       });
-    }
-
-    document.addEventListener('click', () => {
-      const overlay = document.getElementById('overlay');
-      overlay.classList.add('fade-out');
-      if (player && player.unMute) {
-        player.unMute();
-        player.setVolume(100);
-      }
     }, { once: true });
   </script>
 </body>
