@@ -85,6 +85,24 @@
       box-shadow: 0 0 10px red, 0 0 20px red;
       transform: scale(1.1);
     }
+
+    img.artwork {
+  object-fit: contain;
+  cursor: pointer;
+  transition: transform 0.3s ease, z-index 0.3s;
+  display: block;
+  max-width: 100%;
+  filter: invert(1) hue-rotate(180deg);
+  position: relative;
+  z-index: 1;
+}
+
+img.artwork:active,
+img.artwork:focus,
+img.artwork.clicked {
+  transform: scale(2.2);
+  z-index: 10;
+}
   </style>
 </head>
 <body>
@@ -325,5 +343,24 @@
 
     loadArtworksBatch();
   </script>
+
+<script>
+  document.querySelectorAll('img.artwork').forEach(img => {
+    img.addEventListener('click', () => {
+      // Toggle "clicked" class
+      img.classList.toggle('clicked');
+    });
+  });
+
+  // Optional: remove 'clicked' class if clicking elsewhere
+  document.addEventListener('click', (e) => {
+    if (!e.target.classList.contains('artwork')) {
+      document.querySelectorAll('img.artwork.clicked').forEach(img => {
+        img.classList.remove('clicked');
+      });
+    }
+  });
+</script>
+
 </body>
 </html>
