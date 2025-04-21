@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hell Mode – Drew Connor Holland</title>
+  <title>HELL MODE</title>
   <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet" />
   <style>
     body {
@@ -12,6 +12,26 @@
       font-family: 'Audiowide', sans-serif;
       overflow-x: hidden;
       color: white;
+    }
+
+    #background-wrapper {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      z-index: -1;
+    }
+
+    #background-wrapper iframe {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      min-width: 100vw;
+      min-height: 100vh;
+      pointer-events: none;
     }
 
     header {
@@ -24,6 +44,39 @@
       z-index: 10;
       color: #fff;
       pointer-events: none;
+    }
+
+    #gallery {
+      width: 100vw;
+      padding-top: 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .art-block {
+      margin: 60px 0;
+      position: relative;
+      transform: translateX(var(--x-offset));
+      transition: transform 0.3s ease;
+    }
+
+    img.artwork {
+      object-fit: contain;
+      display: block;
+      max-width: 100%;
+      filter: invert(1) hue-rotate(180deg);
+      transition: transform 6s ease-in-out;
+    }
+
+    img.artwork.floating {
+      animation: floaty 12s ease-in-out infinite;
+    }
+
+    @keyframes floaty {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+      100% { transform: translateY(0px); }
     }
 
     .controls {
@@ -55,50 +108,37 @@
       transform: scale(1.1);
     }
 
-    #gallery {
-      width: 100vw;
-      padding-top: 80px;
+    #overlay {
+      position: fixed;
+      inset: 0;
       display: flex;
-      flex-direction: column;
       align-items: center;
+      justify-content: center;
+      background-color: rgba(0, 0, 0, 0.95);
+      color: red;
+      font-size: 3rem;
+      text-align: center;
+      z-index: 999;
+      transition: all 0.6s ease;
+      font-family: 'Audiowide', sans-serif;
+      cursor: pointer;
     }
 
-    .art-block {
-      margin: 60px 0;
-      position: relative;
-      transform: translateX(var(--x-offset));
-      transition: transform 0.3s ease;
-    }
-
-    img.artwork {
-      object-fit: contain;
-      cursor: grab;
-      display: block;
-      max-width: 100%;
-      filter: invert(1) hue-rotate(180deg);
+    #overlay.fade-out {
       opacity: 0;
-      transition: transform 0.2s ease, opacity 0.8s ease;
-    }
-
-    img.artwork.floating {
-      animation: float 4s ease-in-out infinite;
-      opacity: 1;
-    }
-
-    @keyframes float {
-      0% { transform: translateY(0px); }
-      50% { transform: translateY(-20px); }
-      100% { transform: translateY(0px); }
+      transform: scale(1.5);
+      pointer-events: none;
     }
   </style>
 </head>
 <body>
-  <header>Drew Connor Holland</header>
+  <div id="background-wrapper"></div>
+  <header>DNALLOh RONNOc WERd</header>
   <div id="gallery"></div>
-
+  <div id="overlay">PRESS FOR HELL MODE</div>
   <div class="controls">
-    <a href="index.html" class="control-button">&larr;</a>
-    <button class="control-button" onclick="location.reload()">&#8635;</button>
+    <a href="index.html" class="control-button">←</a>
+    <button class="control-button" onclick="location.reload()">⟳</button>
   </div>
 
   <script>
@@ -284,17 +324,12 @@
       "https://freight.cargo.site/m/X2317764996189961801305411709142/1S5A0285-1.jpg",
       "https://freight.cargo.site/m/V2317764996208408545379121260758/02.jpg",
       "https://freight.cargo.site/m/Q2317764996226855289452830812374/2.-Martin--Tom--Mammon-Sometimes-a-dream-turns-into-a-dream.JPG"
- ];
+];
 
     const gallery = document.getElementById('gallery');
     let loadedCount = 0;
-    const batchSize = 10;
-
-    function shuffle(array) {
-      return array.sort(() => Math.random() - 0.5);
-    }
-
-    const shuffledArtworks = shuffle([...artworks]);
+    const batchSize = 12;
+    const shuffledArtworks = artworks.sort(() => Math.random() - 0.5);
 
     function loadArtworksBatch() {
       const screenWidth = window.innerWidth;
@@ -310,13 +345,11 @@
         const img = document.createElement('img');
         img.src = src;
         img.className = 'artwork';
-        const scaleFactor = Math.random() * 0.35 + 0.75;
-        img.style.width = (baseWidth * scaleFactor).toFixed(2) + 'px';
-
-        wrapper.appendChild(img);
-        gallery.appendChild(wrapper);
+        img.style.width = (baseWidth * (Math.random() * 0.35 + 0.75)).toFixed(2) + 'px';
 
         observer.observe(img);
+        wrapper.appendChild(img);
+        gallery.appendChild(wrapper);
       });
 
       loadedCount += batch.length;
@@ -332,13 +365,52 @@
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('floating');
-          observer.unobserve(entry.target);
         }
       });
     }, { threshold: 0.1 });
 
     loadArtworksBatch();
   </script>
+
+  <!-- YouTube Background -->
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script>
+    let player;
+    function onYouTubeIframeAPIReady() {
+      const wrapper = document.getElementById('background-wrapper');
+      const div = document.createElement('div');
+      div.id = 'yt-bg-player';
+      wrapper.appendChild(div);
+
+      player = new YT.Player('yt-bg-player', {
+        videoId: 'MsntxeL0N5I',
+        playerVars: {
+          autoplay: 1,
+          controls: 0,
+          showinfo: 0,
+          modestbranding: 1,
+          loop: 1,
+          fs: 0,
+          cc_load_policy: 0,
+          iv_load_policy: 3,
+          autohide: 0,
+          playlist: 'MsntxeL0N5I',
+          mute: 1
+        },
+        events: {
+          onReady: e => e.target.playVideo()
+        }
+      });
+    }
+
+    document.addEventListener('click', () => {
+      const overlay = document.getElementById('overlay');
+      overlay.classList.add('fade-out');
+      if (player && player.unMute) {
+        player.unMute();
+        player.setVolume(100);
+      }
+    }, { once: true });
+  </script>
 </body>
 </html>
-
