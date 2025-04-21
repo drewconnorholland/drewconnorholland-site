@@ -57,7 +57,7 @@
 
     img.artwork.clicked {
       transform: scale(2.2);
-      z-index: 999;
+      z-index: 10;
     }
 
     .controls {
@@ -313,16 +313,14 @@
         img.style.width = (baseWidth * scaleFactor).toFixed(2) + 'px';
 
         img.addEventListener('click', e => {
-          e.stopPropagation(); // prevent click from bubbling to document
-          document.querySelectorAll('img.artwork.clicked').forEach(other => {
-            if (other !== img) other.classList.remove('clicked');
-          });
-          img.classList.toggle('clicked');
+          e.stopPropagation(); // don't trigger document-wide collapse
+          img.classList.toggle('clicked'); // toggle this image only
         });
 
         wrapper.appendChild(img);
         gallery.appendChild(wrapper);
       });
+
       loadedCount += batch.length;
     }
 
@@ -332,7 +330,7 @@
       }
     });
 
-    document.addEventListener('click', e => {
+    document.addEventListener('click', (e) => {
       if (!e.target.classList.contains('artwork')) {
         document.querySelectorAll('img.artwork.clicked').forEach(img => {
           img.classList.remove('clicked');
