@@ -1,5 +1,6 @@
 <!-- Load Audiowide font -->
 <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet" />
+<link rel="preconnect" href="https://freight.cargo.site" />
 
 <style>
   body {
@@ -71,7 +72,6 @@
 <a href="hell-mode.html" id="link-hell" class="nav-link hell-mode">Hell Mode</a>
 
 <img id="random-image" class="bg-image" />
-
 <button class="refresh-button" onclick="location.reload()">⟳</button>
 
 <script>
@@ -84,8 +84,12 @@
     }
   });
 
+  function optimizeUrl(url) {
+    return url.replace('/m/', '/s/');
+  }
+
   const imageUrls = [
-"﻿https://freight.cargo.site/m/K2317764992703527171374306453718/03.jpg",
+   "﻿https://freight.cargo.site/m/K2317764992703527171374306453718/03.jpg",
   "https://freight.cargo.site/m/A2317764992721973915448016005334/041.jpg",
   "https://freight.cargo.site/m/Z2317764992740420659521725556950/04.jpg",
   "https://freight.cargo.site/m/H2317764992758867403595435108566/05.jpg",
@@ -271,7 +275,8 @@
   ];
 
   const img = document.getElementById("random-image");
-  img.src = imageUrls[Math.floor(Math.random() * imageUrls.length)];
+  const randomUrl = imageUrls[Math.floor(Math.random() * imageUrls.length)];
+  img.src = optimizeUrl(randomUrl);
   img.style.top = Math.floor(Math.random() * 70 + 10) + "%";
   img.style.left = Math.floor(Math.random() * 80 + 10) + "%";
 </script>
