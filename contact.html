@@ -5,6 +5,7 @@
   <title>CONTACT</title>
   <!-- Load Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@500&family=Audiowide&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://freight.cargo.site" />
   <style>
     body {
       margin: 0;
@@ -43,6 +44,7 @@
       left: 20px;
       display: flex;
       gap: 15px;
+      z-index: 999;
     }
 
     .control-button {
@@ -64,9 +66,19 @@
       box-shadow: 0 0 10px red, 0 0 20px red;
       transform: scale(1.1);
     }
+
+    .bg-image {
+      position: fixed;
+      opacity: 0.2;
+      pointer-events: none;
+      mix-blend-mode: lighten;
+      max-height: 35vh;
+    }
   </style>
 </head>
 <body>
+
+  <img id="random-image" class="bg-image" />
 
   <div class="link-container">
     <a href="mailto:enquiries@janmurphygallery.com.au" class="link">Jan Murphy Gallery</a>
@@ -84,10 +96,31 @@
       return Math.random() * (max - min) + min + '%';
     }
 
+    // Randomize link positions
     document.querySelectorAll('.link').forEach(link => {
       link.style.top = randomPercent(10, 80);
       link.style.left = randomPercent(10, 80);
     });
+
+    // Background image
+    const imageUrls = [
+      "https://freight.cargo.site/m/K2317764992703527171374306453718/03.jpg",
+      "https://freight.cargo.site/m/A2317764992721973915448016005334/041.jpg",
+      "https://freight.cargo.site/m/Z2317764992740420659521725556950/04.jpg",
+      "https://freight.cargo.site/m/H2317764992758867403595435108566/05.jpg",
+      "https://freight.cargo.site/m/V2317764992777314147669144660182/06.jpg",
+      "https://freight.cargo.site/m/Y2317764992795760891742854211798/07.jpg",
+      "https://freight.cargo.site/m/B2317764992814207635816563763414/09.jpg",
+      "https://freight.cargo.site/m/X2317764993828778559870589102294/2023.11.15_Drew-Connor-Holland_Artwork_6.jpg",
+      "https://freight.cargo.site/m/M2317764995987047616494606641366/Landscape-I-can_t-hear-the-rain.jpg",
+      "https://freight.cargo.site/m/X2317764995894813896126058883286/IMG_7575.PNG"
+    ];
+
+    const img = document.getElementById("random-image");
+    const randomUrl = imageUrls[Math.floor(Math.random() * imageUrls.length)];
+    img.src = randomUrl;
+    img.style.top = randomPercent(10, 70);
+    img.style.left = randomPercent(10, 80);
   </script>
 </body>
 </html>
