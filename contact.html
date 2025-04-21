@@ -16,6 +16,12 @@
       position: relative;
     }
 
+    .link-container {
+      position: relative;
+      height: 100%;
+      width: 100%;
+    }
+
     .link {
       position: absolute;
       font-size: 1.2rem;
@@ -54,9 +60,12 @@
   </style>
 </head>
 <body>
-  <a href="mailto:enquiries@janmurphygallery.com.au" class="link">Jan Murphy Gallery — enquiries@janmurphygallery.com.au</a>
-  <a href="mailto:info@nasha.com.au" class="link">Nasha Gallery — info@nasha.com.au</a>
-  <a href="https://instagram.com/drewconnor" target="_blank" class="link">@drewconnor on Instagram</a>
+
+  <div class="link-container">
+    <a href="mailto:enquiries@janmurphygallery.com.au" class="link">Jan Murphy Gallery — enquiries@janmurphygallery.com.au</a>
+    <a href="mailto:info@nasha.com.au" class="link">Nasha Gallery — info@nasha.com.au</a>
+    <a href="https://instagram.com/drewconnor" target="_blank" class="link">@drewconnor on Instagram</a>
+  </div>
 
   <a href="index.html" class="back-button">← Back</a>
 
@@ -65,4 +74,10 @@
       return Math.random() * (max - min) + min + '%';
     }
 
-    document.querySelectorAll('.link').
+    document.querySelectorAll('.link').forEach(link => {
+      link.style.top = randomPercent(10, 80);
+      link.style.left = randomPercent(10, 80);
+    });
+  </script>
+</body>
+</html>
