@@ -47,14 +47,17 @@
 
     img.artwork {
       object-fit: contain;
-      cursor: grab;
-      transition: transform 0.2s ease;
+      cursor: pointer;
+      transition: transform 0.3s ease, z-index 0.3s;
       display: block;
       max-width: 100%;
+      position: relative;
+      z-index: 1;
     }
 
-    img.artwork:active {
-      cursor: grabbing;
+    img.artwork.clicked {
+      transform: scale(2.2);
+      z-index: 999;
     }
 
     .controls {
@@ -85,23 +88,6 @@
       box-shadow: 0 0 10px red, 0 0 20px red;
       transform: scale(1.1);
     }
-
-    img.artwork {
-  object-fit: contain;
-  cursor: pointer;
-  transition: transform 0.3s ease, z-index 0.3s;
-  display: block;
-  max-width: 100%;
-  position: relative;
-  z-index: 1;
-}
-
-img.artwork:active,
-img.artwork:focus,
-img.artwork.clicked {
-  transform: scale(2.2);
-  z-index: 10;
-}
   </style>
 </head>
 <body>
@@ -297,7 +283,7 @@ img.artwork.clicked {
   "https://freight.cargo.site/m/X2317764996189961801305411709142/1S5A0285-1.jpg",
   "https://freight.cargo.site/m/V2317764996208408545379121260758/02.jpg",
   "https://freight.cargo.site/m/Q2317764996226855289452830812374/2.-Martin--Tom--Mammon-Sometimes-a-dream-turns-into-a-dream.JPG"
-  ];
+ ];
 
     let loadedCount = 0;
     const batchSize = 10;
@@ -308,34 +294,37 @@ img.artwork.clicked {
 
     const shuffledArtworks = shuffle([...artworks]);
 
-function loadArtworksBatch() {
-  const screenWidth = window.innerWidth;
-  const baseWidth = screenWidth / 3;
+    function loadArtworksBatch() {
+      const screenWidth = window.innerWidth;
+      const baseWidth = screenWidth / 3;
 
-  const batch = shuffledArtworks.slice(loadedCount, loadedCount + batchSize);
-  batch.forEach(src => {
-    const wrapper = document.createElement('div');
-    wrapper.className = 'art-block';
-    const xOffset = Math.floor(Math.random() * 200 - 100) + 'px';
-    wrapper.style.setProperty('--x-offset', xOffset);
+      const batch = shuffledArtworks.slice(loadedCount, loadedCount + batchSize);
+      batch.forEach(src => {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'art-block';
+        const xOffset = Math.floor(Math.random() * 200 - 100) + 'px';
+        wrapper.style.setProperty('--x-offset', xOffset);
 
-    const img = document.createElement('img');
-    img.src = src;
-    img.className = 'artwork';
+        const img = document.createElement('img');
+        img.src = src;
+        img.className = 'artwork';
 
-    const scaleFactor = Math.random() * 0.35 + 0.75;
-    img.style.width = (baseWidth * scaleFactor).toFixed(2) + 'px';
+        const scaleFactor = Math.random() * 0.35 + 0.75;
+        img.style.width = (baseWidth * scaleFactor).toFixed(2) + 'px';
 
-    // Toggle enlarge on click
-    img.addEventListener('click', () => {
-      img.classList.toggle('enlarged');
-    });
+        img.addEventListener('click', e => {
+          e.stopPropagation(); // prevent click from bubbling to document
+          document.querySelectorAll('img.artwork.clicked').forEach(other => {
+            if (other !== img) other.classList.remove('clicked');
+          });
+          img.classList.toggle('clicked');
+        });
 
-    wrapper.appendChild(img);
-    gallery.appendChild(wrapper);
-  });
-  loadedCount += batch.length;
-}
+        wrapper.appendChild(img);
+        gallery.appendChild(wrapper);
+      });
+      loadedCount += batch.length;
+    }
 
     window.addEventListener('scroll', () => {
       if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
@@ -343,26 +332,15 @@ function loadArtworksBatch() {
       }
     });
 
+    document.addEventListener('click', e => {
+      if (!e.target.classList.contains('artwork')) {
+        document.querySelectorAll('img.artwork.clicked').forEach(img => {
+          img.classList.remove('clicked');
+        });
+      }
+    });
+
     loadArtworksBatch();
   </script>
-
-<script>
-  document.querySelectorAll('img.artwork').forEach(img => {
-    img.addEventListener('click', () => {
-      // Toggle "clicked" class
-      img.classList.toggle('clicked');
-    });
-  });
-
-  // Optional: remove 'clicked' class if clicking elsewhere
-  document.addEventListener('click', (e) => {
-    if (!e.target.classList.contains('artwork')) {
-      document.querySelectorAll('img.artwork.clicked').forEach(img => {
-        img.classList.remove('clicked');
-      });
-    }
-  });
-</script>
-
 </body>
 </html>
