@@ -73,4 +73,26 @@
       'These works question how we value the data which surrounds us and act as an avatar for the myriad of reference points which we collate into our perception of ourselves.',
       'Value, and the ambiguity of value, is a core element of Holland’s work.',
       'The cultural value of ancient detritus, such as combs, spoons, or graffiti, typically is appreciated before the emotional value to the persons which interacted with these things.',
-      'He ascribes emotional value to his
+      'He ascribes emotional value to his own archaeologies (receipts, love letters, drawings, medication) with the archaeologies of others (detritus from museum installations, reverses of canvasses, donated news clippings, human hair); in doing so prompting the audience to question how we perceive an object as a singular entity.',
+      'Holland’s recent solo exhibitions include Cut through the circle, Jan Murphy Gallery, Brisbane (2023); Three drafts of the same poem, Nasha, Sydney (2023).',
+      'Holland has been featured in group exhibitions at Nasha Gallery (Sydney), Jan Murphy Gallery (Brisbane), Durden and Ray (Los Angeles), Perc Tucker Regional Gallery (Townsville), Rockhampton Museum of Art (Rockhampton), Perth Institute of Contemporary Art (Perth).',
+      'He was the recipient of the Brett Whiteley Travelling Art Scholarship (Kangaroo Island) in 2022, and has been a finalist in the Blake Prize (2024), Mosman Art Prize (2024), HATCHED (2017).',
+      'Featured publications include Broadsheet Magazine (2025), Art Collector Magazine (2020), Artist Profile (2019), and VAULT Magazine (2019).',
+      'Works are held in the Maitland Regional Art Gallery and Townsville City Galleries collections.'
+    ];
+
+    const shuffled = fragments.sort(() => Math.random() - 0.5);
+    const container = document.getElementById('bio');
+
+    shuffled.forEach(text => {
+      const el = document.createElement('p');
+      el.className = 'fragment';
+      el.textContent = text;
+      el.style.fontSize = (Math.random() * 0.4 + 0.9).toFixed(2) + 'rem';
+      el.style.letterSpacing = (Math.random() * 1.5 - 0.5).toFixed(2) + 'px';
+      el.style.textAlign = ['left', 'center', 'right'][Math.floor(Math.random() * 3)];
+      container.appendChild(el);
+    });
+  </script>
+</body>
+</html>
