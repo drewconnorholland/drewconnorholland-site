@@ -1,110 +1,114 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Medieval Weapon Showcase</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: #f5f5f5;
-      position: relative;
-      height: 100vh;
-      overflow: hidden;
-      font-family: Arial, sans-serif;
+<!-- Load Audiowide font -->
+<link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet" />
+<link rel="preconnect" href="https://freight.cargo.site" />
+
+<style>
+  body {
+    background-color: #000;
+    color: white;
+    font-family: 'Audiowide', sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .nav-link {
+    position: absolute;
+    text-decoration: none;
+    color: white;
+    font-size: 1.8rem;
+    transition: transform 0.3s ease, color 0.3s ease;
+    font-family: 'Audiowide', sans-serif;
+  }
+
+  .nav-link:hover {
+    color: red;
+    transform: scale(1.1);
+  }
+
+  .hell-mode {
+    font-size: 2.5rem;
+    text-shadow: 0 0 10px red, 0 0 20px red;
+  }
+
+  .bg-image {
+    position: fixed;
+    opacity: 0.2;
+    pointer-events: none;
+    mix-blend-mode: lighten;
+    max-height: 35vh;
+  }
+
+  .refresh-button {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    font-size: 1.4rem;
+    color: white;
+    text-decoration: none;
+    border: 1px solid white;
+    padding: 8px 14px;
+    border-radius: 6px;
+    background: transparent;
+    font-family: 'Audiowide', sans-serif;
+    transition: 0.3s ease all;
+    cursor: pointer;
+    z-index: 999;
+  }
+
+  .refresh-button:hover {
+    background: red;
+    color: black;
+    box-shadow: 0 0 10px red, 0 0 20px red;
+    transform: scale(1.1);
+  }
+</style>
+
+<a href="about.html" id="link-about" class="nav-link">About</a>
+<a href="contact.html" id="link-contact" class="nav-link">Contact</a>
+<a href="works.html" id="link-work" class="nav-link">Works</a>
+<a href="hell-mode.html" id="link-hell" class="nav-link hell-mode">Hell Mode</a>
+
+<img id="random-image" class="bg-image" />
+<button class="refresh-button" onclick="location.reload()">⟳</button>
+
+<script>
+  const links = ["link-contact", "link-work", "link-about", "link-hell"];
+  links.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.style.top = Math.floor(Math.random() * 70 + 10) + "%";
+      el.style.left = Math.floor(Math.random() * 80 + 10) + "%";
     }
-    .nav-link {
-      position: absolute;
-      padding: 10px 15px;
-      background-color: rgba(0, 0, 0, 0.6);
-      color: #fff;
-      text-decoration: none;
-      border-radius: 4px;
-      font-size: 14px;
-    }
-    #random-image {
-      position: absolute;
-      max-width: 40%;
-      height: auto;
-      border: 3px solid #333;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    }
-    .caption {
-      position: absolute;
-      background-color: rgba(255, 255, 255, 0.8);
-      padding: 8px 12px;
-      border-radius: 4px;
-      font-size: 12px;
-      max-width: 300px;
-    }
-  </style>
-</head>
-<body>
+  });
 
-  <!-- Navigation Links -->
-  <a href="#contact" id="link-contact" class="nav-link">Contact</a>
-  <a href="#works" id="link-works" class="nav-link">Works</a>
-  <a href="#about" id="link-about" class="nav-link">About</a>
-  <a href="#gallery" id="link-gallery" class="nav-link">Gallery</a>
+  function optimizeUrl(url) {
+    return url.replace('/m/', '/s/');
+  }
 
-  <!-- Random Image -->
-  <img id="random-image" src="" alt="Medieval Weapon">
-  <div id="image-caption" class="caption"></div>
+  const imageUrls = [
+    "https://freight.cargo.site/m/K2317764992703527171374306453718/03.jpg",
+    "https://freight.cargo.site/m/A2317764992721973915448016005334/041.jpg",
+    "https://freight.cargo.site/m/Z2317764992740420659521725556950/04.jpg",
+    "https://freight.cargo.site/m/H2317764992758867403595435108566/05.jpg",
+    "https://freight.cargo.site/m/V2317764992777314147669144660182/06.jpg",
+    "https://freight.cargo.site/m/Y2317764992795760891742854211798/07.jpg",
+    "https://freight.cargo.site/m/B2317764992814207635816563763414/09.jpg",
+    "https://freight.cargo.site/m/F2317764992832654379890273315030/10.jpg",
+    "https://freight.cargo.site/m/O2317764992851101123963982866646/131.jpg",
+    "https://freight.cargo.site/m/X2317764993828778559870589102294/2023.11.15_Drew-Connor-Holland_Artwork_6.jpg",
+    "https://freight.cargo.site/m/H2317764993754991583575750895830/2023.11.15_Drew-Connor-Holland_Artwork_2.jpg",
+    "https://freight.cargo.site/m/W2317764993865672048018008205526/2023.11.15_Drew-Connor-Holland_Artwork_8.jpg",
+    "https://freight.cargo.site/m/M2317764995987047616494606641366/Landscape-I-can_t-hear-the-rain.jpg",
+    "https://freight.cargo.site/m/S2317764995581219246872996505814/Drew-Connor-Holland-FS-20201014-9882.jpg",
+    "https://freight.cargo.site/m/X2317764995894813896126058883286/IMG_7575.PNG"
+  ];
 
-  <script>
-    // List of Open Access images from The Met
-    const images = [
-      {
-        url: 'https://images.metmuseum.org/CRDImages/aa/original/DP-13186-001.jpg',
-        caption: 'Viking Sword, 10th century, Scandinavian origin. The richly decorated hilt and pattern-welded blade indicate that this sword was carried by a warrior of high rank. Source: The Metropolitan Museum of Art.'
-      },
-      {
-        url: 'https://images.metmuseum.org/CRDImages/aa/original/DP-13186-002.jpg',
-        caption: 'Falchion, ca. 1490, Italian, Venice. A rare example of a curved sword used in Europe from about 1200. Source: The Metropolitan Museum of Art.'
-      },
-      {
-        url: 'https://images.metmuseum.org/CRDImages/aa/original/DP-13186-003.jpg',
-        caption: 'Lucerne Hammer, ca. 1550–1600, Swiss. A type of polearm weapon used in the late medieval period. Source: The Metropolitan Museum of Art.'
-      },
-      {
-        url: 'https://images.metmuseum.org/CRDImages/aa/original/DP-13186-004.jpg',
-        caption: 'Mace, ca. 1550–1600, Italian. A ceremonial weapon symbolizing authority and power. Source: The Metropolitan Museum of Art.'
-      },
-      {
-        url: 'https://images.metmuseum.org/CRDImages/aa/original/DP-13186-005.jpg',
-        caption: 'Sword and Scabbard, 60 BCE, Celtic. An exceptional example of Celtic craftsmanship. Source: The Metropolitan Museum of Art.'
-      }
-    ];
-
-    // Function to get a random percentage within a range
-    function getRandomPercentage(min, max) {
-      return Math.floor(Math.random() * (max - min + 1)) + min + '%';
-    }
-
-    // Position navigation links randomly
-    const linkIds = ['link-contact', 'link-works', 'link-about', 'link-gallery'];
-    linkIds.forEach(id => {
-      const el = document.getElementById(id);
-      if (el) {
-        el.style.top = getRandomPercentage(5, 80);
-        el.style.left = getRandomPercentage(5, 80);
-      }
-    });
-
-    // Display a random image and caption
-    const img = document.getElementById('random-image');
-    const caption = document.getElementById('image-caption');
-    const randomImage = images[Math.floor(Math.random() * images.length)];
-    img.src = randomImage.url;
-    caption.textContent = randomImage.caption;
-
-    // Position image and caption randomly
-    img.style.top = getRandomPercentage(10, 60);
-    img.style.left = getRandomPercentage(10, 60);
-    caption.style.top = (parseInt(img.style.top) + 45) + '%';
-    caption.style.left = img.style.left;
-  </script>
-
-</body>
-</html>
+  const img = document.getElementById("random-image");
+  const randomUrl = imageUrls[Math.floor(Math.random() * imageUrls.length)];
+  img.src = optimizeUrl(randomUrl);
+  img.style.top = Math.floor(Math.random() * 70 + 10) + "%";
+  img.style.left = Math.floor(Math.random() * 80 + 10) + "%";
+</script>
