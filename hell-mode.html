@@ -74,16 +74,6 @@
       position: absolute;
     }
 
-    img.artwork.floating {
-      animation: floaty 12s ease-in-out infinite;
-    }
-
-    @keyframes floaty {
-      0% { transform: translateY(0px); }
-      50% { transform: translateY(-20px); }
-      100% { transform: translateY(0px); }
-    }
-
     .controls {
       position: fixed;
       bottom: 20px;
@@ -133,6 +123,16 @@
       opacity: 0;
       transform: scale(1.5);
       pointer-events: none;
+    }
+
+    /* Drift animation */
+    @keyframes drift {
+      0% {
+        transform: translate(0, 0) rotate(0deg);
+      }
+      100% {
+        transform: translate(var(--dx), var(--dy)) rotate(var(--rotation));
+      }
     }
   </style>
 </head>
@@ -359,23 +359,17 @@
         img.style.left = randomLeft;  // Apply initial position for left
         img.style.top = randomTop;  // Apply initial position for top
 
-        // Apply random drifting effect using animation
-        const randomXSpeed = Math.random() * 0.5 + 0.1;  // Horizontal speed
-        const randomYSpeed = Math.random() * 0.5 + 0.1;  // Vertical speed
+        // Apply random drifting effect using CSS variables
+        const randomXSpeed = (Math.random() * 0.5 + 0.1) * 100;  // Horizontal speed
+        const randomYSpeed = (Math.random() * 0.5 + 0.1) * 100;  // Vertical speed
+        const randomRotation = Math.random() * 360;  // Random rotation
+
+        // Set CSS variables for drift animation
+        img.style.setProperty('--dx', randomXSpeed + 'px');
+        img.style.setProperty('--dy', randomYSpeed + 'px');
+        img.style.setProperty('--rotation', randomRotation + 'deg');
 
         img.style.animation = `drift ${Math.random() * 10 + 5}s linear infinite`; // Random animation duration
-        img.style.animationName = 'drift';
-        img.style.animationTimingFunction = 'linear';
-
-        // Drift keyframes (animation)
-        const styleSheet = document.styleSheets[0];
-        const driftKeyframes = `
-          @keyframes drift {
-            0% { transform: translate(${randomLeft}, ${randomTop}) rotate(${Math.random() * 360}deg); }
-            100% { transform: translate(${randomLeft + randomXSpeed * 100}px, ${randomTop + randomYSpeed * 100}px) rotate(${Math.random() * 360}deg); }
-          }
-        `;
-        styleSheet.insertRule(driftKeyframes, styleSheet.cssRules.length);
 
         gallery.appendChild(wrapper);
         wrapper.appendChild(img);
