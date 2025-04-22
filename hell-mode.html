@@ -61,7 +61,7 @@
       height: 200px;
       margin: 10px;
       cursor: pointer;
-      transition: transform 0.5s ease-in-out; /* Smooth transition for effects */
+      transition: transform 0.5s ease-in-out;
     }
 
     img.artwork {
@@ -148,7 +148,6 @@
 
   <script>
     const artworks = [
-
       "https://freight.cargo.site/m/A2317764992721973915448016005334/041.jpg",
       "https://freight.cargo.site/m/Z2317764992740420659521725556950/04.jpg",
       "https://freight.cargo.site/m/H2317764992758867403595435108566/05.jpg",
@@ -330,7 +329,7 @@
       "https://freight.cargo.site/m/X2317764996189961801305411709142/1S5A0285-1.jpg",
       "https://freight.cargo.site/m/V2317764996208408545379121260758/02.jpg",
       "https://freight.cargo.site/m/Q2317764996226855289452830812374/2.-Martin--Tom--Mammon-Sometimes-a-dream-turns-into-a-dream.JPG"
-   ];
+    ];
 
     const gallery = document.getElementById('gallery');
     let loadedCount = 0;
@@ -360,29 +359,17 @@
         img.style.left = randomLeft;  // Apply initial position for left
         img.style.top = randomTop;  // Apply initial position for top
 
-        // Apply random drift animation and random rotation origin
-        const randomXOrigin = Math.random() * 100;  // Random X-axis position from 0% to 100%
-        const randomYOrigin = Math.random() * 100;  // Random Y-axis position from 0% to 100%
+        // Apply random drifting effect using CSS variables
+        const randomXSpeed = (Math.random() * 0.5 + 0.1) * 100;  // Horizontal speed
+        const randomYSpeed = (Math.random() * 0.5 + 0.1) * 100;  // Vertical speed
+        const randomRotation = Math.random() * 360;  // Random rotation
 
-        img.style.transformOrigin = `${randomXOrigin}% ${randomYOrigin}%`; // Set random transform origin
-
-        // Random drifting effect
-        const randomXSpeed = Math.random() * 0.5 + 0.1;  // Horizontal speed
-        const randomYSpeed = Math.random() * 0.5 + 0.1;  // Vertical speed
+        // Set CSS variables for drift animation
+        img.style.setProperty('--dx', randomXSpeed + 'px');
+        img.style.setProperty('--dy', randomYSpeed + 'px');
+        img.style.setProperty('--rotation', randomRotation + 'deg');
 
         img.style.animation = `drift ${Math.random() * 10 + 5}s linear infinite`; // Random animation duration
-        img.style.animationName = 'drift';
-        img.style.animationTimingFunction = 'linear';
-
-        // Drift keyframes (animation)
-        const styleSheet = document.styleSheets[0];
-        const driftKeyframes = `
-          @keyframes drift {
-            0% { transform: translate(${randomLeft}, ${randomTop}) rotate(${Math.random() * 360}deg); }
-            100% { transform: translate(${randomLeft + randomXSpeed * 100}px, ${randomTop + randomYSpeed * 100}px) rotate(${Math.random() * 360}deg); }
-          }
-        `;
-        styleSheet.insertRule(driftKeyframes, styleSheet.cssRules.length);
 
         gallery.appendChild(wrapper);
         wrapper.appendChild(img);
@@ -399,25 +386,6 @@
 
     // Initial load
     loadArtworksBatch();
-
-    // Click event for entering Hell Mode
-    document.addEventListener('click', () => {
-      const overlay = document.getElementById('overlay');
-      
-      // Apply fade-out animation
-      overlay.classList.add('fade-out');
-      
-      // Ensure the overlay is clickable only once, and remove it after the fade-out animation completes
-      setTimeout(() => {
-        overlay.style.pointerEvents = 'none';  // Disable clicks on overlay after fade-out
-      }, 600);  // Match the duration of your fade-out animation
-
-      // Unmute and set the volume for the YouTube player
-      if (player && player.unMute) {
-        player.unMute();
-        player.setVolume(100);
-      }
-    }, { once: true });
   </script>
 
   <!-- YouTube Background -->
@@ -450,6 +418,15 @@
         }
       });
     }
+
+    document.addEventListener('click', () => {
+      const overlay = document.getElementById('overlay');
+      overlay.classList.add('fade-out');
+      if (player && player.unMute) {
+        player.unMute();
+        player.setVolume(100);
+      }
+    }, { once: true });
   </script>
 </body>
 </html>
