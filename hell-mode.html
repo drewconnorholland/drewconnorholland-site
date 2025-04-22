@@ -61,6 +61,8 @@
       height: 200px;
       margin: 10px;
       overflow: hidden;
+      cursor: grab;
+      transition: transform 0.2s ease-in-out;
     }
 
     img.artwork {
@@ -326,7 +328,7 @@
       "https://freight.cargo.site/m/X2317764996189961801305411709142/1S5A0285-1.jpg",
       "https://freight.cargo.site/m/V2317764996208408545379121260758/02.jpg",
       "https://freight.cargo.site/m/Q2317764996226855289452830812374/2.-Martin--Tom--Mammon-Sometimes-a-dream-turns-into-a-dream.JPG"
-];
+ ];
 
     const gallery = document.getElementById('gallery');
     let loadedCount = 0;
@@ -342,9 +344,9 @@
         const wrapper = document.createElement('div');
         wrapper.className = 'art-block';
 
-        // Randomize the image's position but within the grid
+        // Randomize the image's position
         const randomTop = Math.floor(Math.random() * 400) + 'px';  // Random vertical position
-        const randomLeft = Math.floor(Math.random() * (screenWidth - 300)) + 'px';  // Random horizontal position (considering the image width)
+        const randomLeft = Math.floor(Math.random() * (screenWidth - 300)) + 'px';  // Random horizontal position
 
         wrapper.style.top = randomTop;
         wrapper.style.left = randomLeft;
@@ -354,6 +356,26 @@
         img.className = 'artwork';
         img.style.width = '100%';  // Ensures the image fits within the div
         img.style.height = '100%';  // Ensures the image fits within the div
+        img.draggable = true;
+
+        // Add drag functionality
+        img.addEventListener('dragstart', (e) => {
+          e.dataTransfer.setData('text/plain', img.src);  // Store the image source for later use
+          img.style.transition = 'transform 0.1s ease';  // Apply transition during dragging
+          img.style.transform = 'scale(1.2)';  // Scale up the image when dragging
+        });
+
+        img.addEventListener('dragend', () => {
+          img.style.transition = 'transform 0.3s ease';  // Reset transition after drag
+          img.style.transform = 'scale(1)';  // Reset scale after drag ends
+        });
+
+        img.addEventListener('drag', (e) => {
+          // While dragging, move the image along with the cursor
+          img.style.position = 'absolute';
+          img.style.left = `${e.pageX - img.width / 2}px`;
+          img.style.top = `${e.pageY - img.height / 2}px`;
+        });
 
         observer.observe(img);
         wrapper.appendChild(img);
