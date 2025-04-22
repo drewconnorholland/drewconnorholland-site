@@ -324,7 +324,7 @@
       "https://freight.cargo.site/m/X2317764996189961801305411709142/1S5A0285-1.jpg",
       "https://freight.cargo.site/m/V2317764996208408545379121260758/02.jpg",
       "https://freight.cargo.site/m/Q2317764996226855289452830812374/2.-Martin--Tom--Mammon-Sometimes-a-dream-turns-into-a-dream.JPG"
-];
+ ];
 
     const gallery = document.getElementById('gallery');
     let loadedCount = 0;
@@ -341,6 +341,7 @@
         const wrapper = document.createElement('div');
         wrapper.className = 'art-block';
 
+        // Randomize positions both horizontally and vertically
         const randomTop = Math.floor(Math.random() * screenHeight) + 'px';  // Random vertical position
         const randomLeft = Math.floor(Math.random() * screenWidth) + 'px';  // Random horizontal position
 
@@ -362,7 +363,7 @@
 
     window.addEventListener('scroll', () => {
       if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
-        loadArtworksBatch();
+        loadArtworksBatch();  // Load more images when user scrolls near the bottom
       }
     });
 
@@ -374,6 +375,7 @@
       });
     }, { threshold: 0.1 });
 
+    // Initial load
     loadArtworksBatch();
   </script>
 
