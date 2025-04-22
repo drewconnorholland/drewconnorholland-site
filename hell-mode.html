@@ -61,8 +61,8 @@
       height: 200px;
       margin: 10px;
       overflow: hidden;
-      cursor: grab;
-      transition: transform 0.2s ease-in-out;
+      cursor: pointer;
+      transition: transform 0.3s ease-in-out; /* Smooth transition for click effects */
     }
 
     img.artwork {
@@ -70,7 +70,7 @@
       width: 100%;
       height: 100%;
       filter: invert(1) hue-rotate(180deg);
-      transition: transform 6s ease-in-out;
+      transition: transform 0.3s ease-in-out; /* Smooth transition for scaling and rotation */
     }
 
     img.artwork.floating {
@@ -356,25 +356,21 @@
         img.className = 'artwork';
         img.style.width = '100%';  // Ensures the image fits within the div
         img.style.height = '100%';  // Ensures the image fits within the div
-        img.draggable = true;
 
-        // Add drag functionality
-        img.addEventListener('dragstart', (e) => {
-          e.dataTransfer.setData('text/plain', img.src);  // Store the image source for later use
-          img.style.transition = 'transform 0.1s ease';  // Apply transition during dragging
-          img.style.transform = 'scale(1.2)';  // Scale up the image when dragging
-        });
+        // Add click functionality to change spawn point, size, and rotation
+        img.addEventListener('click', () => {
+          const randomX = Math.floor(Math.random() * (screenWidth - 300)) + 'px';  // New random position
+          const randomY = Math.floor(Math.random() * 400) + 'px';  // New random position
 
-        img.addEventListener('dragend', () => {
-          img.style.transition = 'transform 0.3s ease';  // Reset transition after drag
-          img.style.transform = 'scale(1)';  // Reset scale after drag ends
-        });
+          // Apply random scaling and rotation effects
+          const scale = Math.random() * (1.5 - 1) + 1; // Random scale between 1 and 1.5
+          const rotation = Math.floor(Math.random() * 360) + 'deg'; // Random rotation
 
-        img.addEventListener('drag', (e) => {
-          // While dragging, move the image along with the cursor
+          img.style.transition = 'transform 0.3s ease-in-out';  // Smooth transition
+          img.style.transform = `scale(${scale}) rotate(${rotation})`;  // Scale and rotate the image
           img.style.position = 'absolute';
-          img.style.left = `${e.pageX - img.width / 2}px`;
-          img.style.top = `${e.pageY - img.height / 2}px`;
+          img.style.left = randomX;  // Move to a new random horizontal position
+          img.style.top = randomY;  // Move to a new random vertical position
         });
 
         observer.observe(img);
