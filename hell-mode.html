@@ -56,8 +56,8 @@
 
     .art-block {
       margin: 60px 0;
-      position: relative;
-      transform: translateX(var(--x-offset));
+      position: absolute;
+      transform: translateX(var(--x-offset)) translateY(var(--y-offset));
       transition: transform 0.3s ease;
     }
 
@@ -328,19 +328,24 @@
 
     const gallery = document.getElementById('gallery');
     let loadedCount = 0;
-    const batchSize = 12;
+    const batchSize = 24;  // Increase images per scroll
     const shuffledArtworks = artworks.sort(() => Math.random() - 0.5);
 
     function loadArtworksBatch() {
       const screenWidth = window.innerWidth;
+      const screenHeight = window.innerHeight;
       const baseWidth = screenWidth / 3;
       const batch = shuffledArtworks.slice(loadedCount, loadedCount + batchSize);
 
       batch.forEach(src => {
         const wrapper = document.createElement('div');
         wrapper.className = 'art-block';
-        const xOffset = Math.floor(Math.random() * 200 - 100) + 'px';
-        wrapper.style.setProperty('--x-offset', xOffset);
+
+        const randomTop = Math.floor(Math.random() * screenHeight) + 'px';  // Random vertical position
+        const randomLeft = Math.floor(Math.random() * screenWidth) + 'px';  // Random horizontal position
+
+        wrapper.style.setProperty('--x-offset', randomLeft);
+        wrapper.style.setProperty('--y-offset', randomTop);  // Apply random vertical position
 
         const img = document.createElement('img');
         img.src = src;
