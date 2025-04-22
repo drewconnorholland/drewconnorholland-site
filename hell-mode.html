@@ -60,7 +60,6 @@
       width: 30%;
       height: 200px;
       margin: 10px;
-      overflow: hidden;
       cursor: pointer;
       transition: transform 0.3s ease-in-out; /* Smooth transition for click effects */
     }
@@ -71,6 +70,7 @@
       height: 100%;
       filter: invert(1) hue-rotate(180deg);
       transition: transform 0.3s ease-in-out; /* Smooth transition for scaling and rotation */
+      will-change: transform;
     }
 
     img.artwork.floating {
