@@ -1,3 +1,6 @@
+
+html
+Copy
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -61,7 +64,7 @@
       height: 200px;
       margin: 10px;
       cursor: pointer;
-      transition: transform 0.3s ease-in-out; /* Smooth transition for click effects */
+      transition: transform 0.5s ease-in-out; /* Smooth transition for click effects */
     }
 
     img.artwork {
@@ -69,8 +72,8 @@
       width: 100%;
       height: 100%;
       filter: invert(1) hue-rotate(180deg);
-      transition: transform 0.3s ease-in-out; /* Smooth transition for scaling and rotation */
-      will-change: transform;
+      transition: transform 0.5s ease-in-out; /* Smooth transition for scaling and rotation */
+      will-change: transform; /* Optimizes for transform changes */
     }
 
     img.artwork.floating {
@@ -328,7 +331,7 @@
       "https://freight.cargo.site/m/X2317764996189961801305411709142/1S5A0285-1.jpg",
       "https://freight.cargo.site/m/V2317764996208408545379121260758/02.jpg",
       "https://freight.cargo.site/m/Q2317764996226855289452830812374/2.-Martin--Tom--Mammon-Sometimes-a-dream-turns-into-a-dream.JPG"
- ];
+];
 
     const gallery = document.getElementById('gallery');
     let loadedCount = 0;
@@ -357,7 +360,7 @@
         img.style.width = '100%';  // Ensures the image fits within the div
         img.style.height = '100%';  // Ensures the image fits within the div
 
-        // Add click functionality to change spawn point, size, and rotation
+        // Add click functionality to change spawn point, size, and rotation smoothly
         img.addEventListener('click', () => {
           const randomX = Math.floor(Math.random() * (screenWidth - 300)) + 'px';  // New random position
           const randomY = Math.floor(Math.random() * 400) + 'px';  // New random position
@@ -366,11 +369,9 @@
           const scale = Math.random() * (1.5 - 1) + 1; // Random scale between 1 and 1.5
           const rotation = Math.floor(Math.random() * 360) + 'deg'; // Random rotation
 
-          img.style.transition = 'transform 0.3s ease-in-out';  // Smooth transition
-          img.style.transform = `scale(${scale}) rotate(${rotation})`;  // Scale and rotate the image
-          img.style.position = 'absolute';
-          img.style.left = randomX;  // Move to a new random horizontal position
-          img.style.top = randomY;  // Move to a new random vertical position
+          // Apply the transformation smoothly with transitions
+          img.style.transition = 'transform 0.5s ease-in-out';  // Smooth transition for position, scale, and rotation
+          img.style.transform = `translate(${randomX}, ${randomY}) scale(${scale}) rotate(${rotation})`;  // Apply all transformations
         });
 
         observer.observe(img);
