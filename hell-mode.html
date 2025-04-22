@@ -329,104 +329,73 @@
       "https://freight.cargo.site/m/X2317764996189961801305411709142/1S5A0285-1.jpg",
       "https://freight.cargo.site/m/V2317764996208408545379121260758/02.jpg",
       "https://freight.cargo.site/m/Q2317764996226855289452830812374/2.-Martin--Tom--Mammon-Sometimes-a-dream-turns-into-a-dream.JPG"
-  ];
+ ];
 
-    const gallery = document.getElementById('gallery');
-    let loadedCount = 0;
-    const batchSize = 15;  // Load 15 images at a time
-    const shuffledArtworks = artworks.sort(() => Math.random() - 0.5);
+  const gallery = document.getElementById('gallery');
+  let loadedCount = 0;
+  const batchSize = 15;  // Load 15 images at a time
+  const shuffledArtworks = artworks.sort(() => Math.random() - 0.5);
 
-    function loadArtworksBatch() {
-      const screenWidth = window.innerWidth;
-      const screenHeight = window.innerHeight;
-      const batch = shuffledArtworks.slice(loadedCount, loadedCount + batchSize);
+  function loadArtworksBatch() {
+    const screenWidth = window.innerWidth;
+    const screenHeight = window.innerHeight;
+    const batch = shuffledArtworks.slice(loadedCount, loadedCount + batchSize);
 
-      batch.forEach(src => {
-        const wrapper = document.createElement('div');
-        wrapper.className = 'art-block';
+    batch.forEach(src => {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'art-block';
 
-        // Randomize the image's position within the gallery container
-        const randomTop = Math.floor(Math.random() * 400) + 'px';  // Random vertical position
-        const randomLeft = Math.floor(Math.random() * (screenWidth - 300)) + 'px';  // Random horizontal position
+      // Randomize the image's position within the gallery container
+      const randomTop = Math.floor(Math.random() * 400) + 'px';  // Random vertical position
+      const randomLeft = Math.floor(Math.random() * (screenWidth - 300)) + 'px';  // Random horizontal position
 
-        wrapper.style.position = 'relative';  // Ensure wrapper is positioned within the gallery
+      wrapper.style.position = 'relative';  // Ensure wrapper is positioned within the gallery
 
-        const img = document.createElement('img');
-        img.src = src;
-        img.className = 'artwork';
-        img.style.width = '100%';  // Ensures the image fits within the div
-        img.style.height = '100%';  // Ensures the image fits within the div
-        img.style.left = randomLeft;  // Apply initial position for left
-        img.style.top = randomTop;  // Apply initial position for top
+      const img = document.createElement('img');
+      img.src = src;
+      img.className = 'artwork';
+      img.style.width = '100%';  // Ensures the image fits within the div
+      img.style.height = '100%';  // Ensures the image fits within the div
+      img.style.left = randomLeft;  // Apply initial position for left
+      img.style.top = randomTop;  // Apply initial position for top
 
-        // Apply random drifting effect using CSS variables
-        const randomXSpeed = (Math.random() * 0.5 + 0.1) * 100;  // Horizontal speed
-        const randomYSpeed = (Math.random() * 0.5 + 0.1) * 100;  // Vertical speed
-        const randomRotation = Math.random() * 3000;  // Random rotation
+      // Apply random drift animation and random rotation origin
+      const randomXOrigin = Math.random() * 100;  // Random X-axis position from 0% to 100%
+      const randomYOrigin = Math.random() * 100;  // Random Y-axis position from 0% to 100%
 
-        // Set CSS variables for drift animation
-        img.style.setProperty('--dx', randomXSpeed + 'px');
-        img.style.setProperty('--dy', randomYSpeed + 'px');
-        img.style.setProperty('--rotation', randomRotation + 'deg');
+      img.style.transformOrigin = `${randomXOrigin}% ${randomYOrigin}%`; // Set random transform origin
 
-        img.style.animation = `drift ${Math.random() * 10 + 5}s linear infinite`; // Random animation duration
+      // Random drifting effect
+      const randomXSpeed = Math.random() * 0.5 + 0.1;  // Horizontal speed
+      const randomYSpeed = Math.random() * 0.5 + 0.1;  // Vertical speed
 
-        gallery.appendChild(wrapper);
-        wrapper.appendChild(img);
-      });
+      img.style.animation = `drift ${Math.random() * 10 + 5}s linear infinite`; // Random animation duration
+      img.style.animationName = 'drift';
+      img.style.animationTimingFunction = 'linear';
 
-      loadedCount += batch.length;
-    }
+      // Drift keyframes (animation)
+      const styleSheet = document.styleSheets[0];
+      const driftKeyframes = `
+        @keyframes drift {
+          0% { transform: translate(${randomLeft}, ${randomTop}) rotate(${Math.random() * 360}deg); }
+          100% { transform: translate(${randomLeft + randomXSpeed * 100}px, ${randomTop + randomYSpeed * 100}px) rotate(${Math.random() * 360}deg); }
+        }
+      `;
+      styleSheet.insertRule(driftKeyframes, styleSheet.cssRules.length);
 
-    window.addEventListener('scroll', () => {
-      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
-        loadArtworksBatch();  // Load more images when user scrolls near the bottom
-      }
+      gallery.appendChild(wrapper);
+      wrapper.appendChild(img);
     });
 
-    // Initial load
-    loadArtworksBatch();
-  </script>
+    loadedCount += batch.length;
+  }
 
-  <!-- YouTube Background -->
-  <script src="https://www.youtube.com/iframe_api"></script>
-  <script>
-    let player;
-    function onYouTubeIframeAPIReady() {
-      const wrapper = document.getElementById('background-wrapper');
-      const div = document.createElement('div');
-      div.id = 'yt-bg-player';
-      wrapper.appendChild(div);
-
-      player = new YT.Player('yt-bg-player', {
-        videoId: 'MsntxeL0N5I',
-        playerVars: {
-          autoplay: 1,
-          controls: 0,
-          showinfo: 0,
-          modestbranding: 1,
-          loop: 1,
-          fs: 0,
-          cc_load_policy: 0,
-          iv_load_policy: 3,
-          autohide: 0,
-          playlist: 'MsntxeL0N5I',
-          mute: 1
-        },
-        events: {
-          onReady: e => e.target.playVideo()
-        }
-      });
+  window.addEventListener('scroll', () => {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
+      loadArtworksBatch();  // Load more images when user scrolls near the bottom
     }
+  });
 
-    document.addEventListener('click', () => {
-      const overlay = document.getElementById('overlay');
-      overlay.classList.add('fade-out');
-      if (player && player.unMute) {
-        player.unMute();
-        player.setVolume(100);
-      }
-    }, { once: true });
-  </script>
-</body>
-</html>
+  // Initial load
+  loadArtworksBatch();
+</script>
