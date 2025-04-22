@@ -1,6 +1,3 @@
-
-html
-Copy
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -362,8 +359,8 @@ Copy
 
         // Add click functionality to change spawn point, size, and rotation smoothly
         img.addEventListener('click', () => {
-          const randomX = Math.floor(Math.random() * (screenWidth - 300)) + 'px';  // New random position
-          const randomY = Math.floor(Math.random() * 400) + 'px';  // New random position
+          const randomX = Math.floor(Math.random() * (screenWidth - 300));  // New random horizontal position
+          const randomY = Math.floor(Math.random() * 400);  // New random vertical position
 
           // Apply random scaling and rotation effects
           const scale = Math.random() * (1.5 - 1) + 1; // Random scale between 1 and 1.5
@@ -371,7 +368,7 @@ Copy
 
           // Apply the transformation smoothly with transitions
           img.style.transition = 'transform 0.5s ease-in-out';  // Smooth transition for position, scale, and rotation
-          img.style.transform = `translate(${randomX}, ${randomY}) scale(${scale}) rotate(${rotation})`;  // Apply all transformations
+          img.style.transform = `translate(${randomX}px, ${randomY}px) scale(${scale}) rotate(${rotation})`;  // Apply all transformations
         });
 
         observer.observe(img);
