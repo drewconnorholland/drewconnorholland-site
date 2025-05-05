@@ -3,8 +3,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>~cv</title>
-  <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@500&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CV - Drew Connor Holland</title>
+  <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@500&family=Audiowide&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
@@ -20,10 +21,21 @@
       position: relative;
     }
 
+    h1 {
+      font-family: 'Audiowide', sans-serif;
+      font-size: 3rem;
+      color: red;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
     .fragment {
       max-width: 800px;
       margin: 20px 0;
       transition: all 0.3s ease;
+      font-size: 1.2rem;
+      text-align: left;
+      letter-spacing: 0.5px;
     }
 
     .controls {
@@ -58,17 +70,17 @@
   </style>
 </head>
 <body>
-  <h1>cv</h1>
-  <div id="cv"></div>
+  <h1>Curriculum Vitae</h1>
+  <div id="cv-content"></div>
 
   <!-- Navigation Buttons -->
   <div class="controls">
-    <a href="index.html" class="control-button">←</a>
-    <button class="control-button" onclick="location.reload()">⟳</button>
+    <a href="index.html" class="control-button">← Back</a>
+    <button class="control-button" onclick="location.reload()">⟳ Refresh</button>
   </div>
 
   <script>
-    const exhibitions = [
+    const cvContent = [
       'Publications:',
       'Teoh, Adeline. 2025. Reko Rennie and Drew Connor Holland on public art, Warhammer, and what to expect in Melbourne Art Fair. Broadsheet magazine.',
       'McBurnie, Jonathan. 2023. WRESTLEMANIA. Rockhampton: Rockhampton Museum of Art.',
