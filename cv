@@ -1,0 +1,145 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>~cv</title>
+  <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@500&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 40px 20px;
+      background-color: #000;
+      color: white;
+      font-family: 'Epilogue', sans-serif;
+      font-weight: 500;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    .fragment {
+      max-width: 800px;
+      margin: 20px 0;
+      transition: all 0.3s ease;
+    }
+
+    .controls {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      display: flex;
+      gap: 15px;
+      z-index: 999;
+    }
+
+    .control-button {
+      font-size: 1.4rem;
+      color: white;
+      text-decoration: none;
+      border: 1px solid white;
+      padding: 8px 14px;
+      border-radius: 6px;
+      background: transparent;
+      font-family: 'Epilogue', sans-serif;
+      font-weight: 500;
+      transition: 0.3s ease all;
+      cursor: pointer;
+    }
+
+    .control-button:hover {
+      background: red;
+      color: black;
+      box-shadow: 0 0 10px red, 0 0 20px red;
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+  <h1>cv</h1>
+  <div id="cv"></div>
+
+  <!-- Navigation Buttons -->
+  <div class="controls">
+    <a href="index.html" class="control-button">←</a>
+    <button class="control-button" onclick="location.reload()">⟳</button>
+  </div>
+
+  <script>
+    const exhibitions = [
+      'Publications:',
+      'Teoh, Adeline. 2025. Reko Rennie and Drew Connor Holland on public art, Warhammer, and what to expect in Melbourne Art Fair. Broadsheet magazine.',
+      'McBurnie, Jonathan. 2023. WRESTLEMANIA. Rockhampton: Rockhampton Museum of Art.',
+      'McBurnie, Jonathan. 2022. Disintegration: Metadrawing and Expanded Drawing. Townsville: Perc Tucker Regional Gallery.',
+      'Holland, Drew Connor. 2021. Gloss/. BIRDLAND, Jonathan McBurnie, November 5, 2021. Artspace Mckay.',
+      'Revanche, Jonno, and Drew Holland. 2021. You Appearing. Edited by Nathan Beard. Runway Journal, no. 43: Divine (May).',
+      'Goldspink, Sebastian. 2020. Next: Drew Connor Holland. Art Collector Magazine, no. 92 (October).',
+      'Holland, Drew Connor. 2019. Process: Drew Connor Holland. Artist Profile, no. 46 (February).',
+      'Campbell, Cressida, Drew Holland, Mark Hughes, and Dick Quan. 2018. Why Is Australian Art so Cheap? Panel discussion by Barry Keldoulis, edited by Eli Walsh. Artist Profile, no. 46 (February).',
+      'Kale, Neha. 2019. Forecast - Drew Connor Holland. VAULT, no. 26 (May).',
+      'Holland, Drew Connor, 2016. Donda. Edited by Anadoor Walsh. APATHETIC Journal, no. 3: Log Off (June).',
+      
+      'Lectures and Presentations:',
+      'Holland, Drew Connor. 2023. Artist Talk: Nasha, Aotearoa Art Fair, New Zealand.',
+      'Holland, Drew Connor. 2020. Artist Talk: Nadir (Even If I Break In Two), Galerie Pompom.',
+      'Holland, Drew Connor. 2017-2019. Spotlight talks, Museum of Contemporary Art, Sydney.',
+      'Holland, Drew Connor. 2019. DREW CONNOR HOLLAND, Photography Guest Lecture Program, Lecture 2, University of Technology, Sydney.',
+      'Campbell, Cressida, Drew Holland, Mark Hughes, and Dick Quan. 2018. TALK CONTEMPORARY: WHY IS AUSTRALIAN ART SO CHEAP?, Panel discussion by Barry Keldoulis, Sydney Contemporary.',
+      
+      'Solo Exhibitions:',
+      '2025: Three drafts of the same poem ii, Melbourne Art Fair, Melbourne, NSW.',
+      '2025: Oars, Redleaf Gallery, Woolahra, NSW.',
+      '2023: Cut through the circle, Jan Murphy Gallery, QLD.',
+      '2023: Three drafts of the same poem, Nasha, Sydney, NSW.',
+      '2022: Grateful for one thing or another, Our Neon Foe, Sydney, NSW.',
+      '2022: Applause from a bell tower, Nasha, Sydney, NSW.',
+      '2020: NADIR (even if i break in two), Galerie Pompom, Sydney, NSW.',
+      '2019: I Measured All This Grace Against Our Ghost, Jan Murphy Gallery, QLD (online).',
+      '2019: (Angel, Soldier), Tributary Projects, Canberra, ACT.',
+      '2018: Golgotha, Alaska Projects, Sydney, NSW.',
+      '2017: So Far Away From Love, Alaska Projects, Sydney, NSW.',
+      
+      'Selected Group Exhibitions:',
+      '2024: Blake Prize, Casula Powerhouse, NSW.',
+      '2024: Mosman Art Prize, Mosman Art Gallery, NSW.',
+      '2023: Auckland Art Fair, Auckland, NZ.',
+      '2023: Horny Jail, Nasha Gallery Sydney, NSW.',
+      '2023: Summer, Jan Murphy Gallery, Brisbane, QLD.',
+      '2022: Brett Whitley Travelling Art Scholarship, Brett Whiteley Studio, Sydney, NSW.',
+      '2022: Shimmer, Durden and Ray, Los Angeles, CA.',
+      '2022: Risographomania, Perc Tucker Regional Gallery, QLD.',
+      '2021: Wrestlemania, Rockhampton Museum of Art, QLD.',
+      '2020: Same But Different, Showroom Gallery, NSW.',
+      
+      'Awards, Residencies, Internships:',
+      '2024: Finalist, Blake Prize, Casula Powerhouse, NSW.',
+      '2024: Finalist, Mosman Art Prize, Mosman Art Gallery, NSW.',
+      '2022: Winner, Brett Whiteley Travelling Art Scholarship residency - Shark Island Kangaroo Valley.',
+      '2017: Finalist, HATCHED, National Graduate Show, Perth Institute of Contemporary Art, WA.',
+      '2016: Margaret Olley Drawing Week Internship, National Art School.',
+      '2015: Finalist, Gippsland Print Award, Gippsland Art Gallery, Sale, Vic.',
+      '2013: Finalist, Newcastle Emerging Art Prize, Newcastle Artspace.',
+      
+      'Collections:',
+      'Maitland Regional Art Gallery.',
+      'Townsville City Galleries.',
+      'Private collections, Australia and USA.'
+    ];
+
+    const shuffled = exhibitions.sort(() => Math.random() - 0.5);
+    const container = document.getElementById('exhibitions');
+
+    shuffled.forEach(text => {
+      const el = document.createElement('p');
+      el.className = 'fragment';
+      el.textContent = text;
+      el.style.fontSize = (Math.random() * 0.4 + 0.9).toFixed(2) + 'rem';
+      el.style.letterSpacing = (Math.random() * 1.5 - 0.5).toFixed(2) + 'px';
+      el.style.textAlign = ['left', 'center', 'right'][Math.floor(Math.random() * 3)];
+      container.appendChild(el);
+    });
+  </script>
+</body>
+</html>
