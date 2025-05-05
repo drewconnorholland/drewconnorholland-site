@@ -81,6 +81,7 @@
   <a href="about.html" id="link-about" class="nav-link">About</a>
   <a href="contact.html" id="link-contact" class="nav-link">Contact</a>
   <a href="works.html" id="link-work" class="nav-link">Works</a>
+  <!-- Add the CV link -->
   <a href="cv.html" id="link-cv" class="nav-link">CV</a>
 
   <!-- Hell Mode button is hidden by default -->
@@ -91,7 +92,7 @@
 
   <script>
     // Random positioning of nav links
-    const links = ["link-contact", "link-work", "link-about", "link-hell"];
+    const links = ["link-contact", "link-work", "link-about", "link-cv", "link-hell"];
     links.forEach(id => {
       const el = document.getElementById(id);
       if (el) {
@@ -100,6 +101,8 @@
       }
     });
 
+    // Random background image
+    const imageUrls = [
     // Random background image
     const imageUrls = [
       "https://freight.cargo.site/m/K2317764992703527171374306453718/03.jpg",
@@ -117,7 +120,7 @@
       "https://freight.cargo.site/m/M2317764995987047616494606641366/Landscape-I-can_t-hear-the-rain.jpg",
       "https://freight.cargo.site/m/S2317764995581219246872996505814/Drew-Connor-Holland-FS-20201014-9882.jpg",
       "https://freight.cargo.site/m/X2317764995894813896126058883286/IMG_7575.PNG"
-    ];
+   ];
 
     const img = document.getElementById("random-image");
     const randomUrl = imageUrls[Math.floor(Math.random() * imageUrls.length)];
