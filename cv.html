@@ -126,10 +126,10 @@
       'Maitland Regional Art Gallery.',
       'Townsville City Galleries.',
       'Private collections, Australia and USA.'
-    ];
+  ];
 
-    const shuffled = exhibitions.sort(() => Math.random() - 0.5);
-    const container = document.getElementById('exhibitions');
+    const shuffled = fragments.sort(() => Math.random() - 0.5);
+    const container = document.getElementById('bio');
 
     shuffled.forEach(text => {
       const el = document.createElement('p');
