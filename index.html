@@ -81,7 +81,9 @@
   <a href="about.html" id="link-about" class="nav-link">About</a>
   <a href="contact.html" id="link-contact" class="nav-link">Contact</a>
   <a href="works.html" id="link-work" class="nav-link">Works</a>
-  <a href="hell-mode.html" id="link-hell" class="nav-link hell-mode">Hell Mode</a>
+
+  <!-- Hell Mode button is hidden by default -->
+  <a href="hell-mode.html" id="link-hell" class="nav-link hell-mode" style="display: none;">Hell Mode</a>
 
   <img id="random-image" class="bg-image" />
   <button class="refresh-button" onclick="location.reload()">⟳</button>
@@ -121,6 +123,17 @@
     img.src = randomUrl;
     img.style.top = Math.floor(Math.random() * 70 + 10) + "%";
     img.style.left = Math.floor(Math.random() * 80 + 10) + "%";
+
+    // Show Hell Mode button with 1 in 10 chance
+    function showHellModeButton() {
+      const randomChance = Math.floor(Math.random() * 10) + 1;
+      if (randomChance === 10) {  // 1 in 10 chance
+        document.getElementById('link-hell').style.display = 'block';  // Show the Hell Mode button
+      }
+    }
+
+    // Run the function to check chance when page loads
+    window.onload = showHellModeButton;
   </script>
 </body>
 </html>
